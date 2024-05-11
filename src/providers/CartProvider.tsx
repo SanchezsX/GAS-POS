@@ -19,7 +19,7 @@ interface CartContextValues {
   remove: (goodId: number) => void;
   increment: (goodId: number) => void;
   decrement: (goodId: number) => void;
-  pay: (price: number) => void;
+  pay: (cb: () => void, price: number) => void;
   clearCart: () => void;
 }
 
@@ -119,7 +119,7 @@ export const CartProvider: FC<{ children: ReactNode; }> = ({ children }) => {
     setCart(filteredItems);
   }
 
-  async function pay(price: number) {
+  async function pay(cb: () => void, price: number) {
     const { error } = await supabase
       .from('orders')
       .update({ status: 'success', price })
@@ -130,6 +130,7 @@ export const CartProvider: FC<{ children: ReactNode; }> = ({ children }) => {
     CART_PAY = true;
     setOrderId(null);
     setCart([]);
+    cb()
   }
 
   async function clearCart() {

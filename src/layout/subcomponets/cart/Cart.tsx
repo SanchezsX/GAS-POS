@@ -1,63 +1,66 @@
-import { SyntheticEvent, useContext, useEffect, useState, type FC } from 'react';
-import CustomButton from '@/components/CustomButton';
-import cn from '@/helpers/cn';
-import CartItem from './CartItem';
-import Icon from '@/components/Icon';
-import { CartContext } from '@/providers/CartProvider';
-import Select from '../Select';
-import CustomInput from '@/components/CustomInput';
-import { supabase } from '@/supabase';
-import { toast } from 'sonner';
+import { SyntheticEvent, useContext, useEffect, useState, type FC } from 'react'
+import CustomButton from '@/components/CustomButton'
+import cn from '@/helpers/cn'
+import CartItem from './CartItem'
+import Icon from '@/components/Icon'
+import { CartContext } from '@/providers/CartProvider'
+import Select from '../Select'
+import CustomInput from '@/components/CustomInput'
+import { supabase } from '@/supabase'
+import { toast } from 'sonner'
 
 // type OrderStatus = 'pending' | 'success' | 'canceled';
 
 const Cart: FC = () => {
-  const [isClicked, setIsClicked] = useState(false);
-  const [totalPrice, setTotalPrice] = useState<number>(0);
-  const [discount, setDiscount] = useState<number>(0);
-  const [isDiscountActive, setIsDiscountActive] = useState(false);
-  const [discountValue, setDiscountValue] = useState('');
+  const [isClicked, setIsClicked] = useState(false)
+  const [totalPrice, setTotalPrice] = useState<number>(0)
+  const [discount, setDiscount] = useState<number>(0)
+  const [isDiscountActive, setIsDiscountActive] = useState(false)
+  const [discountValue, setDiscountValue] = useState('')
 
-  const { cart, pay, clearCart } = useContext(CartContext);
+  const { cart, pay, clearCart } = useContext(CartContext)
 
   const handleClick = () => {
-    setIsClicked(true);
+    setIsClicked(true)
     setTimeout(() => {
-      setIsClicked(false);
-    }, 1000);
-    clearCart();
-  };
+      setIsClicked(false)
+    }, 1000)
+    clearCart()
+    setDiscount(0)
+    setDiscountValue('')
+    setIsDiscountActive(false)
+  }
 
   async function submitDiscount(e: SyntheticEvent) {
-    e.preventDefault();
+    e.preventDefault()
 
     const { data, error } = await supabase
       .from('cards')
       .select()
-      .eq('id', +discountValue);
+      .eq('id', +discountValue)
 
     if (error) {
-      return toast.error(error.message);
+      return toast.error(error.message)
     }
 
     if (!data[0]) {
-      return toast.error('Not valid code card!');
+      return toast.error('Not valid code card!')
     }
 
-    setDiscount(data[0].discount);
-    setIsDiscountActive(false);
-    setDiscountValue('');
+    setDiscount(data[0].discount)
+    setIsDiscountActive(false)
+    setDiscountValue('')
   }
 
   useEffect(() => {
-    let total: number = 0;
+    let total: number = 0
 
     cart.forEach((i) => {
-      total += i.goods.price * i.quantity;
-      const discountPercent = (total / 100) * discount;
-      setTotalPrice(+(total - discountPercent).toFixed(2));
-    });
-  }, [cart, discount]);
+      total += i.goods.price * i.quantity
+      const discountPercent = (total / 100) * discount
+      setTotalPrice(+(total - discountPercent).toFixed(2))
+    })
+  }, [cart, discount])
 
   return (
     <div
@@ -88,8 +91,8 @@ const Cart: FC = () => {
           </h4>
         </div>
       )}
-      {!!cart.length &&
-        <div className="h-[450px] mt-6 overflow-y-auto pr-2">
+      {!!cart.length && (
+        <div className="h-[450px] mt-6 overflow-y-auto pr-3">
           {cart.map((data: any) => (
             <CartItem
               key={data.cart_id}
@@ -97,7 +100,7 @@ const Cart: FC = () => {
             />
           ))}
         </div>
-      }
+      )}
       {cart.length === 0 ? (
         <></>
       ) : (
@@ -147,7 +150,7 @@ const Cart: FC = () => {
             </div>
             <img src="/icons/line.svg" />
           </div>
-          <div className="flex justify-between mb-[30px]">
+          <div className="flex justify-between mb-[30px] mt-auto">
             <p className="text-[20px] font-semibold">Total pay</p>
             <p className="text-[20px] font-semibold">$ {totalPrice}</p>
           </div>
@@ -156,13 +159,18 @@ const Cart: FC = () => {
 
       {cart.length === 0 ? (
         <>
-          <CustomButton className='mt-auto' disabled>Pay</CustomButton>
+          <CustomButton
+            className="mt-auto"
+            disabled
+          >
+            Pay
+          </CustomButton>
         </>
       ) : (
-        <div className="flex gap-3">
+        <div className="flex gap-3 mt-auto">
           <CustomButton
             onClick={handleClick}
-            className="rounded-[30px] w-[25%] justify-center flex items-center  bg-white/5"
+            className="rounded-[30px] w-[25%] justify-center flex items-center  bg-white/5 "
           >
             <Icon
               path="refresh.svg"
@@ -175,11 +183,19 @@ const Cart: FC = () => {
               )}
             />
           </CustomButton>
-          <CustomButton onClick={() => pay(totalPrice)}>Pay</CustomButton>
+          <CustomButton
+            onClick={() =>
+              pay(() => {
+                setDiscount(0), setDiscountValue(''), setIsDiscountActive(false)
+              }, totalPrice)
+            }
+          >
+            Pay
+          </CustomButton>
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Cart;
+export default Cart

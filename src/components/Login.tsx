@@ -22,7 +22,6 @@ const Login = () => {
     } else {
       navigate('/fuel')
       getCashiers(data.user.id)
-      console.log(data.user.id)
     }
   }
   const getCashiers = async (id: string) => {
@@ -50,12 +49,14 @@ const Login = () => {
       >
         <h2 className="font-bold text-[30px] mb-4">take a shift</h2>
         <CustomInput
+          className="w-[42vh]"
           placeholder="Email"
           isError={isError}
           onChange={(e) => setEmail(e.target.value)}
           value={email}
         />
         <CustomInput
+          className="w-[42vh]"
           placeholder="Password"
           isError={isError}
           onChange={(e) => setPassword(e.target.value)}
