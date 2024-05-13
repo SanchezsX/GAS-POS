@@ -87,7 +87,7 @@ export interface IconProps {
 export interface ModalProps {
   setIsOpen: (isOpen: boolean) => void
   isOpen: boolean
-  content: ReactNode
+  children: ReactNode
 }
 
 export interface PopoverProps {

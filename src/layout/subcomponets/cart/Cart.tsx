@@ -96,7 +96,6 @@ const Cart: FC = () => {
             Order # {orderId}
           </h2>
         )}
-
         <Select className={cn(cart.length > 0 ? ' ' : 'ml-auto')} />
       </div>
       {cart.length === 0 && (

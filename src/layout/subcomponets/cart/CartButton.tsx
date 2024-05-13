@@ -3,8 +3,6 @@ import Icon from '@/components/Icon'
 import cn from '@/helpers/cn'
 import { CartButtonProps } from '@/modals/Types'
 
-
-
 const CartButton = ({
   handleClick,
   payWithDiscount,
@@ -14,7 +12,7 @@ const CartButton = ({
     <div className="flex gap-3 mt-auto">
       <CustomButton
         onClick={handleClick}
-        className="rounded-[30px] w-[10vh] justify-center flex items-center bg-white/5 "
+        className="rounded-[30px] w-[20%] justify-center flex items-center bg-white/5 "
       >
         <Icon
           path="refresh.svg"

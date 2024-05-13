@@ -14,6 +14,7 @@ import ActionModal from './ActionModal'
 import useFetching from '@/hooks/useFetching'
 import { CartContext } from '@/providers/CartProvider'
 import { Cashier as CashierType } from '@/modals/Types'
+import { motion } from 'framer-motion'
 
 type CashiersStorage = {
   self: CashierType
@@ -41,7 +42,6 @@ const Cashier = () => {
 
   const { cart } = useContext(CartContext)
 
- 
   async function getTodayOrders() {
     const { data, error } = await supabase
       .from('orders')
@@ -131,7 +131,6 @@ const Cashier = () => {
     if (!modalIsOpen) setEmail('')
   }, [modalIsOpen])
 
-
   useEffect(() => {
     getTodayOrders()
     getTotalOrders()
@@ -142,19 +141,16 @@ const Cashier = () => {
   }, [session, modalIsOpen])
   return (
     <>
-      {modalIsOpen && (
-        <Modal
-          isOpen={modalIsOpen}
+      <Modal
+        isOpen={modalIsOpen}
+        setIsOpen={setModalIsOpen}
+      >
+        <ActionModal
           setIsOpen={setModalIsOpen}
-          content={
-            <ActionModal
-              setIsOpen={setModalIsOpen}
-              userId={userId}
-              email={email}
-            />
-          }
+          userId={userId}
+          email={email}
         />
-      )}
+      </Modal>
 
       <div className="w-[275px] h-[244px] bg-sideBg rounded-[39px] py-[37px] px-[20px] mt-[12px]">
         <div className="flex justify-between items-center px-[15px]">
