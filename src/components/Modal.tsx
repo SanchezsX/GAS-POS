@@ -1,11 +1,7 @@
 import cn from '@/helpers/cn'
-import type { FC, MouseEvent, ReactNode } from 'react'
+import { ModalProps } from '@/modals/Types'
+import type { FC, MouseEvent } from 'react'
 
-interface ModalProps {
-  setIsOpen: (isOpen: boolean) => void
-  isOpen: boolean
-  content: ReactNode
-}
 
 const Modal: FC<ModalProps> = ({ isOpen, setIsOpen, content }) => {
   const handleContainerClick = (e: MouseEvent | any) => {

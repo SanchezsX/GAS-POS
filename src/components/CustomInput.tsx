@@ -1,21 +1,8 @@
-import { useState, type ChangeEvent, type InputHTMLAttributes } from 'react';
+import { useState } from 'react'
+import { CustomInputProps } from '@/modals/Types'
 
-import Icon from '@/components/Icon';
-import cn from '@/helpers/cn';
-
-
-interface CustomInputProps extends InputHTMLAttributes<HTMLInputElement> {
-  className?: string;
-  value?: string;
-  isError?: string;
-  placeholder?: string;
-  type?: string;
-  icon?: string;
-  isFocus?: boolean;
-  onBlur?: () => void;
-  onFocus?: () => void;
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-}
+import Icon from '@/components/Icon'
+import cn from '@/helpers/cn'
 
 const CustomInput = ({
   className = '',
@@ -30,7 +17,7 @@ const CustomInput = ({
   onFocus,
   ...props
 }: CustomInputProps) => {
-  const [isHidden, setIsHidden] = useState(false);
+  const [isHidden, setIsHidden] = useState(false)
 
   return (
     <div className="relative flex items-center">
@@ -78,7 +65,7 @@ const CustomInput = ({
         </button>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default CustomInput;
+export default CustomInput

@@ -1,94 +1,80 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react'
 
-import { supabase } from '@/supabase';
-import { toast } from 'sonner';
-import Modal from '@/components/Modal';
-import cn from '@/helpers/cn';
-import Popover from '@/components/Popover/Popover';
-import PopoverItem from '@/components/Popover/PopoverItem';
-import Icon from '@/components/Icon';
-import Skeleton from '@/components/Skeleton';
-import useSession from '@/hooks/useSession';
-import PopoverCashier from '@/layout/subcomponets/PopoverCashier';
-import ActionModal from './ActionModal';
-import useFetching from '@/hooks/useFetching';
-import { CartContext } from '@/providers/CartProvider';
-
-export interface Cashier {
-  cashier_id: number;
-  avatar: string;
-  first_name: string;
-  last_name: string;
-  user_id: string;
-  on_duty: boolean;
-  email: string;
-}
+import { supabase } from '@/supabase'
+import { toast } from 'sonner'
+import Modal from '@/components/Modal'
+import cn from '@/helpers/cn'
+import Popover from '@/components/Popover/Popover'
+import PopoverItem from '@/components/Popover/PopoverItem'
+import Icon from '@/components/Icon'
+import Skeleton from '@/components/Skeleton'
+import useSession from '@/hooks/useSession'
+import PopoverCashier from '@/layout/subcomponets/PopoverCashier'
+import ActionModal from './ActionModal'
+import useFetching from '@/hooks/useFetching'
+import { CartContext } from '@/providers/CartProvider'
+import { Cashier as CashierType } from '@/modals/Types'
 
 type CashiersStorage = {
-  self: Cashier;
-  other: Cashier[];
-};
+  self: CashierType
+  other: CashierType[]
+}
 
 const Cashier = () => {
-  const session = useSession();
-  const [popoverIsOpen, setPopoverIsOpen] = useState(false);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const session = useSession()
+  const [popoverIsOpen, setPopoverIsOpen] = useState(false)
+  const [modalIsOpen, setModalIsOpen] = useState(false)
   const [cashiers, setCashiers] = useState<CashiersStorage>(
     {} as CashiersStorage
-  );
-  const [userId, setUserId] = useState('');
-  const [ordersCount, setOrdersCount] = useState(0);
-  const [totalOrdersCount, setTotalOrdersCount] = useState(0);
+  )
+  const [userId, setUserId] = useState('')
+  const [ordersCount, setOrdersCount] = useState(0)
+  const [totalOrdersCount, setTotalOrdersCount] = useState(0)
 
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('')
 
-  const popoverTriggerRef = useRef<HTMLButtonElement>(null);
+  const popoverTriggerRef = useRef<HTMLButtonElement>(null)
 
-  const [cashierFetch, cashierIsLoading] = useFetching();
-  const [onDutyFetch, onDutyIsLoading] = useFetching();
-  const [loginFetching, _] = useFetching();
+  const [cashierFetch, cashierIsLoading] = useFetching()
+  const [onDutyFetch, onDutyIsLoading] = useFetching()
+  const [loginFetching, _] = useFetching()
 
-  const { cart } = useContext(CartContext);
+  const { cart } = useContext(CartContext)
 
-  useEffect(() => {
-    if (!modalIsOpen) setEmail('');
-  }, [modalIsOpen]);
-
+ 
   async function getTodayOrders() {
     const { data, error } = await supabase
       .from('orders')
       .select()
-      .eq('cashier_id', cashiers.self.cashier_id);
+      .eq('cashier_id', cashiers.self.cashier_id)
 
-    if (error) return toast.error(error.message);
+    if (error) return toast.error(error.message)
 
-    let count = 0;
+    let count = 0
 
     data.forEach((order) => {
-      const date = order?.created_at.split('T')[0];
+      const date = order?.created_at.split('T')[0]
 
-      if (date === new Date().toISOString().split('T')[0]) count++;
-    });
+      if (date === new Date().toISOString().split('T')[0]) count++
+    })
 
-    setOrdersCount(count);
+    setOrdersCount(count)
   }
 
   async function getTotalOrders() {
-    const { data, error } = await supabase
-      .from('orders')
-      .select();
+    const { data, error } = await supabase.from('orders').select()
 
-    if (error) return toast.error(error.message);
+    if (error) return toast.error(error.message)
 
-    let count = 0;
+    let count = 0
 
     data.forEach((order) => {
-      const date = order?.created_at.split('T')[0];
+      const date = order?.created_at.split('T')[0]
 
-      if (date === new Date().toISOString().split('T')[0]) count++;
-    });
+      if (date === new Date().toISOString().split('T')[0]) count++
+    })
 
-    setTotalOrdersCount(count);
+    setTotalOrdersCount(count)
   }
 
   const getCashier = async () => {
@@ -96,14 +82,14 @@ const Cashier = () => {
       const { data, error } = await supabase
         .from('cashiers')
         .select()
-        .eq('user_id', session?.user.id);
+        .eq('user_id', session?.user.id)
 
-      error?.code && toast.error(error.message);
+      error?.code && toast.error(error.message)
 
-      setCashiers((prev) => ({ ...prev, self: data![0] }));
-      getOnDutyCashiers();
-    });
-  };
+      setCashiers((prev) => ({ ...prev, self: data![0] }))
+      getOnDutyCashiers()
+    })
+  }
 
   const getOnDutyCashiers = async () => {
     onDutyFetch(async () => {
@@ -111,46 +97,49 @@ const Cashier = () => {
         .from('cashiers')
         .select()
         .eq('on_duty', true)
-        .neq('user_id', session?.user.id);
+        .neq('user_id', session?.user.id)
 
-      error?.code && toast.error(error.message);
+      error?.code && toast.error(error.message)
 
-      setCashiers((prev) => ({ ...prev, other: data! }));
-    });
-  };
+      setCashiers((prev) => ({ ...prev, other: data! }))
+    })
+  }
 
   const getEmailedCashier = async (userId: string) => {
     loginFetching(async () => {
       const { data: email } = await supabase
         .from('cashiers')
         .select('email')
-        .eq('user_id', userId);
+        .eq('user_id', userId)
 
-      setEmail(email?.[0].email);
-    });
-  };
-
-  useEffect(() => {
-    getTodayOrders();
-    getTotalOrders();
-  }, [cart, cashiers.self]);
-
-  useEffect(() => {
-    session && getCashier();
-  }, [session, modalIsOpen]);
+      setEmail(email?.[0].email)
+    })
+  }
 
   async function handleLogout() {
-    const { error } = await supabase.auth.signOut();
+    const { error } = await supabase.auth.signOut()
 
-    if (error) toast.error('Failed to change account!');
+    if (error) toast.error('Failed to change account!')
   }
 
   const modalHandle = async (userId: string) => {
-    setUserId(userId);
-    await getEmailedCashier(userId);
-    setModalIsOpen((prev) => !prev);
-  };
+    setUserId(userId)
+    await getEmailedCashier(userId)
+    setModalIsOpen((prev) => !prev)
+  }
+  useEffect(() => {
+    if (!modalIsOpen) setEmail('')
+  }, [modalIsOpen])
 
+
+  useEffect(() => {
+    getTodayOrders()
+    getTotalOrders()
+  }, [cart, cashiers.self])
+
+  useEffect(() => {
+    session && getCashier()
+  }, [session, modalIsOpen])
   return (
     <>
       {modalIsOpen && (
@@ -219,7 +208,9 @@ const Cashier = () => {
                     Order in progress...{' '}
                   </p>
                 ) : (
-                  <p className="text-[11px] text-white/30">Today: {ordersCount} orders </p>
+                  <p className="text-[11px] text-white/30">
+                    Today: {ordersCount} orders{' '}
+                  </p>
                 )}
               </>
             )}
@@ -313,7 +304,7 @@ const Cashier = () => {
         ))}
       </Popover>
     </>
-  );
-};
+  )
+}
 
-export default Cashier;
+export default Cashier

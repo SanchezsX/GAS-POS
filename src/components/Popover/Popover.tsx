@@ -1,13 +1,7 @@
 import cn from '@/helpers/cn'
-import { Dispatch, SetStateAction, useEffect, useRef, type FC } from 'react'
+import { PopoverProps } from '@/modals/Types'
+import { useEffect, useRef, type FC } from 'react'
 import { createPortal } from 'react-dom'
-
-interface PopoverProps {
-  children: React.ReactNode
-  isOpen: boolean
-  setIsOpen: Dispatch<SetStateAction<boolean>>
-  triggerRef: React.RefObject<HTMLButtonElement>
-}
 
 const Popover: FC<PopoverProps> = ({
   children,

@@ -35,8 +35,8 @@ const Sidebar: FC = () => {
         <div className="flex flex-col mb-[45px]">
           <Section
             pathIcon="services.svg"
-            isActive={location.pathname === '/services'}
-            to="/services"
+            isActive={location.pathname === '/service'}
+            to="/service"
           >
             Service
           </Section>

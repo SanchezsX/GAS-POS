@@ -1,10 +1,9 @@
 import { FormEvent, useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
-import CustomButton from '@/components/CustomButton'
 import { supabase } from '@/supabase'
+import CustomButton from '@/components/CustomButton'
 import CustomInput from '@/components/CustomInput'
-import cn from '@/helpers/cn'
 
 const Login = () => {
   const [email, setEmail] = useState('')

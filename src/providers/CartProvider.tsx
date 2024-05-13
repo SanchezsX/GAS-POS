@@ -1,50 +1,34 @@
-import { useAuth } from '@/hooks/useAuth';
-import { Goods } from '@/modals/Goods.modal';
-import { supabase } from '@/supabase';
-import type { FC, ReactNode } from 'react';
-import { createContext, useEffect, useState } from 'react';
-import { toast } from 'sonner';
+import { createContext, useEffect, useState } from 'react'
+import type { FC, ReactNode } from 'react'
+import { CartContextValues, CartItem, Goods } from '@/modals/Types'
+import { useAuth } from '@/hooks/useAuth'
 
-export type CartItem = {
-  cart_id: string;
-  good_id: number;
-  order_id: number;
-  quantity: number;
-  goods: Goods;
-};
+import { toast } from 'sonner'
+import { supabase } from '@/supabase'
 
-interface CartContextValues {
-  cart: CartItem[];
-  create: (goods: Goods) => void;
-  remove: (goodId: number) => void;
-  increment: (goodId: number) => void;
-  decrement: (goodId: number) => void;
-  pay: (cb: () => void, price: number) => void;
-  clearCart: () => void;
-}
-
-let CART_ITEMS: CartItem[] | null = null;
-let CART_PAY = false;
+let CART_ITEMS: CartItem[] | null = null
+let CART_PAY = false
 
 export const CartContext = createContext<CartContextValues>(
   {} as CartContextValues
-);
+)
 
-export const CartProvider: FC<{ children: ReactNode; }> = ({ children }) => {
-  const [cart, setCart] = useState<CartItem[]>([]);
-  const [orderId, setOrderId] = useState<number | null>(null);
+export const CartProvider: FC<{ children: ReactNode }> = ({ children }) => {
+  const [cart, setCart] = useState<CartItem[]>([])
+  const [orderId, setOrderId] = useState<number | null>(null)
 
-  const { cashier } = useAuth();
+  const { cashier } = useAuth()
 
   async function create(goods: Goods) {
     if (!orderId && cashier) {
       const { data, error } = await supabase
         .from('orders')
         .insert({ cashier_id: cashier.cashier_id })
-        .select('order_id');
+        .select('order_id')
 
       if (error) {
-        return toast.error(error.message);
+        toast.error(error.message)
+        return
       }
 
       setCart([
@@ -56,13 +40,13 @@ export const CartProvider: FC<{ children: ReactNode; }> = ({ children }) => {
           quantity: goods.quantity,
           goods,
         },
-      ]);
+      ])
 
-      return setOrderId(data?.[0].order_id);
+      return setOrderId(data?.[0].order_id)
     }
 
     if (cart.some((i) => i.good_id === goods.good_id))
-      return remove(goods.good_id);
+      return remove(goods.good_id)
 
     if (orderId) {
       setCart([
@@ -74,62 +58,58 @@ export const CartProvider: FC<{ children: ReactNode; }> = ({ children }) => {
           quantity: goods.quantity,
           goods,
         },
-      ]);
+      ])
     }
   }
 
   function remove(goodId: number) {
-    const filteredCart = cart.filter((item) => item.good_id !== goodId);
-    setCart(filteredCart);
+    const filteredCart = cart.filter((item) => item.good_id !== goodId)
+    setCart(filteredCart)
   }
 
   function increment(goodId: number) {
-    const foundItem = cart.find((item) => item.good_id === goodId)!;
-    const incrementNumber = foundItem?.goods.quantity;
+    const foundItem = cart.find((item) => item.good_id === goodId)!
+    const incrementNumber = foundItem?.goods.quantity
 
     const filteredItems = cart.map((item) => {
       if (item.good_id === goodId) {
-        return { ...foundItem, quantity: foundItem.quantity + incrementNumber };
+        return { ...foundItem, quantity: foundItem.quantity + incrementNumber }
       }
 
-      return item;
-    });
+      return item
+    })
 
-    setCart(filteredItems);
+    setCart(filteredItems)
   }
 
   function decrement(goodId: number) {
-    const foundItem = cart.find((item) => item.good_id === goodId)!;
-    const decrementNumber = foundItem?.goods.quantity;
+    const foundItem = cart.find((item) => item.good_id === goodId)!
+    const decrementNumber = foundItem?.goods.quantity
 
-    if (
-      foundItem.quantity <= decrementNumber ||
-      foundItem.quantity <= decrementNumber
-    )
-      return remove(goodId);
+    if (foundItem.quantity <= decrementNumber) return remove(goodId)
 
     const filteredItems = cart.map((item) => {
       if (item.good_id === goodId) {
-        return { ...foundItem, quantity: foundItem.quantity - decrementNumber };
+        return { ...foundItem, quantity: foundItem.quantity - decrementNumber }
       }
 
-      return item;
-    });
+      return item
+    })
 
-    setCart(filteredItems);
+    setCart(filteredItems)
   }
 
   async function pay(cb: () => void, price: number) {
     const { error } = await supabase
       .from('orders')
       .update({ status: 'success', price })
-      .eq('order_id', orderId);
+      .eq('order_id', orderId)
 
-    if (error) return toast.error(error.message);
+    if (error) return toast.error(error.message)
 
-    CART_PAY = true;
-    setOrderId(null);
-    setCart([]);
+    CART_PAY = true
+    setOrderId(null)
+    setCart([])
     cb()
   }
 
@@ -137,62 +117,65 @@ export const CartProvider: FC<{ children: ReactNode; }> = ({ children }) => {
     const { error } = await supabase
       .from('orders')
       .update({ status: 'canceled' })
-      .eq('order_id', orderId);
+      .eq('order_id', orderId)
 
-    if (error) return toast.error(error.message);
-
-    CART_PAY = true;
-    setOrderId(null);
-    setCart([]);
+    if (error) return toast.error(error.message)
+    CART_PAY = true
+    setOrderId(null)
+    setCart([])
   }
 
   async function selectOrder() {
     if (cashier?.cashier_id) {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('orders')
         .select('order_id')
         .eq('cashier_id', cashier.cashier_id)
-        .eq('status', 'pending');
+        .eq('status', 'pending')
 
-      setOrderId(data?.[0]?.order_id);
+      if (error) return toast.error(error.message)
+      setOrderId(data?.[0]?.order_id)
     }
   }
 
   useEffect(() => {
-    selectOrder();
-  }, [cashier?.cashier_id]);
+    selectOrder()
+  }, [cashier?.cashier_id])
 
   async function selectCartItems() {
     if (orderId) {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('carts')
         .select(`*, goods(*)`)
-        .eq('order_id', orderId);
+        .eq('order_id', orderId)
 
-      CART_ITEMS = data;
-      setCart(data as CartItem[]);
+      if (error) return toast.error(error.message)
+
+      CART_ITEMS = data
+      setCart(data as CartItem[])
     }
   }
 
   useEffect(() => {
-    selectCartItems();
-  }, [orderId]);
+    selectCartItems()
+  }, [orderId])
 
   async function getCart() {
     if (orderId) {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('carts')
         .select(`*, goods(*)`)
-        .eq('order_id', orderId);
+        .eq('order_id', orderId)
 
-      CART_ITEMS = data;
+      if (error) return toast.error(error.message)
+      CART_ITEMS = data
     }
   }
 
   useEffect(() => {
     if (CART_PAY) {
-      CART_PAY = false;
-      return;
+      CART_PAY = false
+      return
     }
 
     if (orderId) {
@@ -201,7 +184,7 @@ export const CartProvider: FC<{ children: ReactNode; }> = ({ children }) => {
           await supabase
             .from('carts')
             .update({ quantity: item.quantity })
-            .eq('cart_id', item.cart_id);
+            .eq('cart_id', item.cart_id)
         }
 
         if (!CART_ITEMS?.some((i) => i.cart_id === item.cart_id)) {
@@ -210,24 +193,25 @@ export const CartProvider: FC<{ children: ReactNode; }> = ({ children }) => {
             order_id: item.order_id,
             good_id: item.good_id,
             quantity: item.quantity,
-          });
+          })
         }
-      });
+      })
     }
 
     CART_ITEMS?.forEach(async (item) => {
       if (!cart.some((i) => i.cart_id === item.cart_id)) {
-        await supabase.from('carts').delete().eq('cart_id', item.cart_id);
+        await supabase.from('carts').delete().eq('cart_id', item.cart_id)
       }
-    });
+    })
 
-    getCart();
-  }, [cart, CART_PAY]);
+    getCart()
+  }, [cart, CART_PAY])
 
   return (
     <CartContext.Provider
       value={{
         cart,
+        orderId,
         pay,
         create,
         remove,
@@ -238,5 +222,5 @@ export const CartProvider: FC<{ children: ReactNode; }> = ({ children }) => {
     >
       {children}
     </CartContext.Provider>
-  );
-};
+  )
+}

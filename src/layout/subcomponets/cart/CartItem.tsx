@@ -1,24 +1,30 @@
-import Icon from '@/components/Icon';
-import Skeleton from '@/components/Skeleton';
-import cn from '@/helpers/cn';
-import { Goods } from '@/modals/Goods.modal';
-import { CartContext } from '@/providers/CartProvider';
-import { useContext } from 'react';
+import Icon from '@/components/Icon'
+import Skeleton from '@/components/Skeleton'
+import cn from '@/helpers/cn'
+import { CartItemProps } from '@/modals/Types'
 
-interface CartItemProps {
-  data: {
-    cart_id: number,
-    order_id: number,
-    good_id: number,
-    goods: Goods;
-    quantity: number;
-  };
+import { CartContext } from '@/providers/CartProvider'
+import { useContext } from 'react'
+
+const SELECR_COLOR_HEX: object = {
+  1: 'rgba(96, 188, 148, 0.1)',
+  2: 'rgba(237, 176, 85, 0.1)',
+  3: 'rgba(100, 146, 236, 0.1)',
 }
-
-const CartItem = ({
-  data
-}: CartItemProps) => {
-  const { increment, decrement } = useContext(CartContext);
+const SELECR_COLOR_RGBA: object = {
+  1: '#60BC94',
+  2: '#EDB055',
+  3: '#6492EC',
+}
+const CartItem = ({ data }: CartItemProps) => {
+  const { increment, decrement } = useContext(CartContext)
+  function getCurrentColor(type: any, selectColor: any) {
+    for (const property in SELECR_COLOR_HEX) {
+      if (property == type) {
+        return selectColor[property]
+      }
+    }
+  }
 
   return (
     <>
@@ -26,34 +32,27 @@ const CartItem = ({
         <div className="flex items-center justify-between first:mt-0 mt-[40px]">
           <div className="flex items-center gap-4">
             <div
-              className={cn(
-                data.goods.type === 1 ? 'bg-[#60BC94]/5' : '',
-                data.goods.type === 2 ? 'bg-[#EDB055]/5' : '',
-                data.goods.type === 3 ? 'bg-[#6492EC]/5' : '',
-                'p-[28px]  rounded-[24px]'
-              )}
+              style={{
+                backgroundColor: getCurrentColor(
+                  data.goods.type,
+                  SELECR_COLOR_HEX
+                ),
+              }}
+              className="p-[28px]  rounded-[24px]"
             >
               {data.goods.icon.startsWith('/') ? (
                 <Icon
                   path={data.goods.icon}
                   width="36px"
                   height="36px"
-                  color={cn(
-                    data.goods.type === 1 ? '#60BC94' : '',
-                    data.goods.type === 2 ? '#EDB055' : '',
-                    data.goods.type === 3 ? '#6492EC' : ''
-                  )}
+                  color={getCurrentColor(data.goods.type, SELECR_COLOR_RGBA)}
                 />
               ) : (
                 <Icon
                   path="fuel-icon.svg"
                   width="36px"
                   height="36px"
-                  color={cn(
-                    data.goods.type === 1 ? '#60BC94' : '',
-                    data.goods.type === 2 ? '#EDB055' : '',
-                    data.goods.type === 3 ? '#6492EC' : ''
-                  )}
+                  color={getCurrentColor(data.goods.type, SELECR_COLOR_RGBA)}
                 />
               )}
             </div>
@@ -113,7 +112,7 @@ const CartItem = ({
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
-export default CartItem;
+export default CartItem

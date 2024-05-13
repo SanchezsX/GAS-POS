@@ -1,34 +1,26 @@
-import {
-  type Dispatch,
-  type FC,
-  type FormEvent,
-  type SetStateAction,
-  useEffect,
-  useState,
-} from 'react'
+import { type FC, type FormEvent, useEffect, useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 
 import { supabase } from '@/supabase'
+import { ActionModalPropsCart } from '@/modals/Types'
 import CustomInput from '@/components/CustomInput'
 import CustomButton from '@/components/CustomButton'
 import useFetching from '@/hooks/useFetching'
 import SupaError from '@/modals/Error'
 import Skeleton from '@/components/Skeleton'
 
-interface ActionModalProps {
-  userId: string
-  email: string
-  setIsOpen: Dispatch<SetStateAction<boolean>>
-}
-
 interface Error {
   login: SupaError
   logout: SupaError
 }
 
-const ActionModal: FC<ActionModalProps> = ({ userId, email, setIsOpen }) => {
+const ActionModal: FC<ActionModalPropsCart> = ({
+  userId,
+  email,
+  setIsOpen,
+}) => {
   const [error, setError] = useState<Error>({} as Error)
   const [password, setPassword] = useState('')
 

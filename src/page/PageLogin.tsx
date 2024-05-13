@@ -1,11 +1,7 @@
 import Login from '@/components/Login'
 
 const PageLogin = () => {
-  return (
-    <div className="">
-      <Login />
-    </div>
-  )
+  return <Login />
 }
 
 export default PageLogin

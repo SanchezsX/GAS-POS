@@ -1,25 +1,21 @@
-import { useState, type FC, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 import { toast } from 'sonner'
 
 import { useLocation } from 'react-router-dom'
+import { supabase } from '@/supabase'
 import SupaError from '@/modals/Error'
 import useFetching from '@/hooks/useFetching'
-import { supabase } from '@/supabase'
-import Skeleton from '@/components/Skeleton'
-import ProductCard from '@/components/ProductCard'
 
-interface Data {
-  good_id: number
-  title: string
-  price: number
-  color: string
-  type: number
-  quantity: number
-  icon: string
-}
+import SectionSceleton from './components/SectionSceleton'
+import { Data } from '@/modals/Types'
+import ProductCard from '@/components/ProductCard/ProductCard'
 
-const Food: FC = () => {
+
+
+
+
+const Food = () => {
   const [goods, setGoods] = useState<Data[]>([] as Data[])
   const [error, setError] = useState<SupaError>(null)
 
@@ -71,35 +67,7 @@ const Food: FC = () => {
       {error ? (
         <div>{error.message}</div>
       ) : isLoading ? (
-        [...Array(8)].map((_, i) => (
-          <div
-            key={i}
-            className="flex flex-col gap-8"
-          >
-            <Skeleton
-              className="rounded-3xl"
-              width="100%"
-              height="190px"
-            />
-            <Skeleton
-              className="rounded-xl"
-              width="100%"
-              height="24px"
-            />
-            <div className="flex items-center gap-5">
-              <Skeleton
-                className="rounded-xl"
-                width="100%"
-                height="30px"
-              />
-              <Skeleton
-                className="rounded-xl"
-                width="100%"
-                height="40px"
-              />
-            </div>
-          </div>
-        ))
+        [...Array(8)].map((_, i) => <SectionSceleton i={i} />)
       ) : (
         goods.map((data) => (
           <ProductCard

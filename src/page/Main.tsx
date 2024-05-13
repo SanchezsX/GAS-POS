@@ -3,10 +3,11 @@ import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { supabase } from '@/supabase'
 import SupaError from '@/modals/Error'
-import Skeleton from '@/components/Skeleton'
-import ProductCard from '@/components/ProductCard'
 import { toast } from 'sonner'
 import useFetching from '@/hooks/useFetching'
+import SectionSceleton from './components/SectionSceleton'
+import ProductCard from '@/components/ProductCard/ProductCard'
+
 
 interface Data {
   good_id: number
@@ -71,33 +72,7 @@ function Main() {
         <div>{error.message}</div>
       ) : isLoading ? (
         [...Array(8)].map((_, i) => (
-          <div
-            key={i}
-            className="flex flex-col gap-8"
-          >
-            <Skeleton
-              className="rounded-3xl"
-              width="100%"
-              height="190px"
-            />
-            <Skeleton
-              className="rounded-xl"
-              width="100%"
-              height="24px"
-            />
-            <div className="flex items-center gap-5">
-              <Skeleton
-                className="rounded-xl"
-                width="100%"
-                height="30px"
-              />
-              <Skeleton
-                className="rounded-xl"
-                width="100%"
-                height="40px"
-              />
-            </div>
-          </div>
+          <SectionSceleton i={i} />
         ))
       ) : (
         goods.map((data) => (

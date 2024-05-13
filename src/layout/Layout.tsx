@@ -8,13 +8,19 @@ import Sidebar from './subcomponets/Sidebar'
 import Cart from './subcomponets/cart/Cart'
 
 const Layout = () => {
+  const [isFocus, setIsFocus] = useState(false)
+  const [search, setSearch] = useState('')
   const session = useSession()
   const navigate = useNavigate()
   const location = useLocation()
-  const [isFocus, setIsFocus] = useState(false)
 
-  const [search, setSearch] = useState('')
 
+  function handleFocus() {
+    setIsFocus(true)
+  }
+  const handleBlur = () => {
+    setIsFocus(false)
+  }
   useEffect(() => {
     if (search) navigate(`?search=${search}`)
     if (!search) navigate(location.pathname)
@@ -24,37 +30,32 @@ const Layout = () => {
     if (session === null) navigate('/login')
   }, [session])
 
-  function handleFocus() {
-    setIsFocus(true)
-  }
-  const handleBlur = () => {
-    setIsFocus(false)
-  }
-
   return (
-    <div className="h-[100svh] grid grid-cols-[282px,1fr,445px] p-[13px]">
-      <div className="h-full">
-        <Sidebar />
-        <Cashier />
-      </div>
-      <div className="flex flex-col mx-[27px] my-[36px]">
-        <CustomInput
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          isFocus={isFocus}
-          icon="search.svg"
-          onChange={(e) => setSearch(e.target.value)}
-          value={search}
-          placeholder="Search..."
-        />
-        <div className="mt-[29px] grid grid-cols-4 gap-6">
-          <Outlet />
+    <>
+      <div className="h-[100svh] grid grid-cols-[282px,1fr,445px] p-[13px]">
+        <div className="h-full">
+          <Sidebar />
+          <Cashier />
+        </div>
+        <div className="flex flex-col mx-[27px] my-[36px]">
+          <CustomInput
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            isFocus={isFocus}
+            icon="search.svg"
+            onChange={(e) => setSearch(e.target.value)}
+            value={search}
+            placeholder="Search..."
+          />
+          <div className="mt-[29px] grid grid-cols-4 gap-6">
+            <Outlet />
+          </div>
+        </div>
+        <div className="flex flex-col items-end">
+          <Cart />
         </div>
       </div>
-      <div className="flex flex-col items-end">
-        <Cart />
-      </div>
-    </div>
+    </>
   )
 }
 
