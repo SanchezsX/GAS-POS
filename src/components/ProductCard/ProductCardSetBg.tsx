@@ -1,17 +1,18 @@
 import { iconToColorMap } from '@/data/Data'
-import cn from '@/helpers/cn'
+
 import { ProductCardSetBgProps } from '@/modals/Types'
 import Icon from '../Icon'
+import { cn } from '@/helpers/cn'
 
 const ProductCardSetBg = ({
   data,
-  create,
   isSelected,
+  create,
 }: ProductCardSetBgProps) => {
   return (
     <div
       className={cn(
-        isSelected ? `${iconToColorMap[data.icon]}/20` : '',
+        isSelected ? `${iconToColorMap[data.icon]}` : '',
         'p-[11px] rounded-[45px] transition duration-500',
         'cursor-pointer'
       )}

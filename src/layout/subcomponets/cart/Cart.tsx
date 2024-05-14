@@ -7,16 +7,17 @@ import CustomButton from '@/components/CustomButton'
 import Skeleton from '@/components/Skeleton'
 import CartItem from './CartItem'
 import Select from '../Select'
-import cn from '@/helpers/cn'
+
 import CartInput from './CartInput'
 import CartButtonDiscount from './CartButtonDiscount'
 import CartTotalPaySummary from './CartTotalPaySummary'
 import CartButton from './CartButton'
 import CartAddProduct from './CartAddProduct'
+import { cn } from '@/helpers/cn'
 
 // type OrderStatus = 'pending' | 'success' | 'canceled';
 
-const Cart: FC = () => {
+const Cart = () => {
   const { cart, orderId, pay, clearCart } = useContext(CartContext)
   const [isDiscountActive, setIsDiscountActive] = useState(false)
   const [discountValue, setDiscountValue] = useState('')

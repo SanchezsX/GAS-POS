@@ -1,8 +1,9 @@
 import { ReactNode } from 'react'
 
 import { Link } from 'react-router-dom'
-import cn from '@/helpers/cn'
+
 import Icon from '@/components/Icon'
+import { cn } from '@/helpers/cn'
 
 interface SectionProps {
   isActive: boolean

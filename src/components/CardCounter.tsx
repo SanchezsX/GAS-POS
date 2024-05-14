@@ -1,6 +1,6 @@
-import cn from '@/helpers/cn'
-import Icon from './Icon'
 import { CartItem, Goods } from '@/modals/Types'
+import { cn } from '@/helpers/cn'
+import Icon from './Icon'
 
 interface CardCounterProps {
   data: Goods

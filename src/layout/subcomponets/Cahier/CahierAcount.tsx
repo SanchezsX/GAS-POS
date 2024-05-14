@@ -1,5 +1,6 @@
 import Skeleton from '@/components/Skeleton'
-import cn from '@/helpers/cn'
+import { cn } from '@/helpers/cn'
+
 
 import { CahierAcountProps } from '@/modals/Types'
 

@@ -9,7 +9,6 @@ import useFetching from '@/hooks/useFetching'
 import SectionSceleton from './components/SectionSceleton'
 import ProductCard from '@/components/ProductCard/ProductCard'
 
-
 function Drinks() {
   const [goods, setGoods] = useState<Data[]>([] as Data[])
   const [error, setError] = useState<SupaError>(null)
@@ -62,10 +61,11 @@ function Drinks() {
       {error ? (
         <div>{error.message}</div>
       ) : isLoading ? (
-        [...Array(8)].map((_, i) => <SectionSceleton i={i} />)
+        [...Array(8)].map((_, i) => <SectionSceleton i={i} key={i} />)
       ) : (
         goods.map((data) => (
           <ProductCard
+
             key={data.good_id}
             data={data}
           />

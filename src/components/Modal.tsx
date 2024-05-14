@@ -1,7 +1,8 @@
 import type { FC, MouseEvent } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ModalProps } from '@/modals/Types'
-import cn from '@/helpers/cn'
+import { cn } from '@/helpers/cn'
+
 
 const Modal: FC<ModalProps> = ({ isOpen, setIsOpen, children }) => {
   const handleContainerClick = (e: MouseEvent | any) => {

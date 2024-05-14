@@ -1,5 +1,6 @@
-import cn from '@/helpers/cn'
 import type { ButtonHTMLAttributes, FC, ReactNode } from 'react'
+import { cn } from '@/helpers/cn'
+
 
 interface CustomButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode
@@ -18,7 +19,7 @@ const CustomButton: FC<CustomButtonProps> = ({
         'font-semibold text-[18px] transition duration-300',
         'w-full bg-primary py-[14px] rounded-[30px]',
         'not:disabled:hover:bg-opacity-80 outline-offset-2 focus:outline-2 focus:outline-primary ',
-        'disabled:bg-gray-500'
+        'disabled:bg-gray-500 hover:bg-opacity-80'
       )}
       {...props}
     >

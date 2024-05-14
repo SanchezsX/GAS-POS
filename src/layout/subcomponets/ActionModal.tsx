@@ -87,6 +87,7 @@ const ActionModal: FC<ActionModalPropsCart> = ({
         animate={{ scale: 1, rotate: "0deg" }}
         exit={{ scale: 0, rotate: "0deg" }}
         transition={{ duration: 0.5 }}
+        
         className="bg-[#181924]/90 w-[550px] h-[450px] flex flex-col justify-center rounded-[50px] "
       >
         <div className="mx-auto flex flex-col gap-4 ">

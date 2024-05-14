@@ -1,7 +1,8 @@
 import Icon from '@/components/Icon'
-import cn from '@/helpers/cn'
+
 import React, { useEffect, useRef, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { cn } from '@/helpers/cn'
+import { AnimatePresence, motion, useAnimate } from 'framer-motion'
 interface Option {
   value: string
   label: string
@@ -19,6 +20,7 @@ const Select: React.FC<{ className?: string }> = ({ className = '' }) => {
   const [selectedValue, setSelectedValue] = useState<Option>(OPTIONS[0])
   const selectRef = useRef<HTMLDivElement>(null)
 
+  
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (

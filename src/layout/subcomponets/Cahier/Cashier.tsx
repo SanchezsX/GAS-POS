@@ -1,15 +1,16 @@
 import { useContext, useEffect, useRef, useState } from 'react'
 
+import { AnimatePresence, motion } from 'framer-motion'
 import { Cashier as CashierType } from '@/modals/Types'
 import { CartContext } from '@/providers/CartProvider'
 import { supabase } from '@/supabase'
 import { toast } from 'sonner'
 import Modal from '@/components/Modal'
-import cn from '@/helpers/cn'
+
 import Popover from '@/components/Popover/Popover'
 import PopoverItem from '@/components/Popover/PopoverItem'
 import Icon from '@/components/Icon'
-import Skeleton from '@/components/Skeleton'
+
 import useSession from '@/hooks/useSession'
 import PopoverCashier from '@/layout/subcomponets/PopoverCashier'
 
@@ -18,6 +19,7 @@ import ActionModal from '../ActionModal'
 import CahierAcount from './CahierAcount'
 import CashierModal from './CashierModal'
 import CahierSceleton from './CahierSceleton'
+import { cn } from '@/helpers/cn'
 
 type CashiersStorage = {
   self: CashierType
@@ -171,21 +173,25 @@ const Cashier = () => {
             <CahierSceleton />
           ) : (
             cashiers.other?.slice(0, 3).map((data) => (
-              <button
-                key={data.user_id}
-                onClick={() => modalHandle(data.user_id)}
-                className="w-[52px] h-[52px] overflow-hidden rounded-full"
-              >
-                <img
-                  className="w-full h-full object-cover"
-                  src={
-                    data?.avatar?.includes('https://')
-                      ? data?.avatar
-                      : '/images/Cashier1.png'
-                  }
-                  alt=""
-                />
-              </button>
+              <AnimatePresence>
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+                  key={data.user_id}
+                  onClick={() => modalHandle(data.user_id)}
+                  className="w-[52px] h-[52px] overflow-hidden rounded-full"
+                >
+                  <img
+                    className="w-full h-full object-cover"
+                    src={
+                      data?.avatar?.includes('https://')
+                        ? data?.avatar
+                        : '/images/Cashier1.png'
+                    }
+                    alt=""
+                  />
+                </motion.button>
+              </AnimatePresence>
             ))
           )}
           {!onDutyIsLoading && cashiers.other?.length < 3 && (

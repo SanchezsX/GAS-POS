@@ -1,4 +1,5 @@
-import cn from "@/helpers/cn"
+import { cn } from "@/helpers/cn"
+
 interface SearchProps {
   width: string
   height: string

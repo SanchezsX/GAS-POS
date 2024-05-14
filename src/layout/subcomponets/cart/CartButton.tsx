@@ -1,6 +1,7 @@
 import CustomButton from '@/components/CustomButton'
 import Icon from '@/components/Icon'
-import cn from '@/helpers/cn'
+import { cn } from '@/helpers/cn'
+
 import { CartButtonProps } from '@/modals/Types'
 
 const CartButton = ({
@@ -12,7 +13,7 @@ const CartButton = ({
     <div className="flex gap-3 mt-auto">
       <CustomButton
         onClick={handleClick}
-        className="rounded-[30px] w-[20%] justify-center flex items-center bg-white/5 "
+        className="rounded-[30px] w-[15vh] justify-center flex items-center bg-white/5 hover:bg-white/10 "
       >
         <Icon
           path="refresh.svg"

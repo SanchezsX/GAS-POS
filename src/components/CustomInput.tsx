@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { CustomInputProps } from '@/modals/Types'
 
 import Icon from '@/components/Icon'
-import cn from '@/helpers/cn'
+import { cn } from '@/helpers/cn'
+
 
 const CustomInput = ({
   className = '',

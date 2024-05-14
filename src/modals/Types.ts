@@ -139,8 +139,3 @@ export interface CahierAcountProps {
   cart: CartItem[]
 }
 
-// export interface CashierModalProps {
-//   cashiers: any
-//   setPopoverIsOpen: Dispatch<SetStateAction<boolean>>
-//   popoverTriggerRef: React.RefObject<HTMLButtonElement>
-// }

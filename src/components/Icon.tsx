@@ -1,6 +1,7 @@
-import cn from '@/helpers/cn'
-import { IconProps } from '@/modals/Types'
 import type { FC } from 'react'
+import { IconProps } from '@/modals/Types'
+import { cn } from '@/helpers/cn'
+
 
 
 

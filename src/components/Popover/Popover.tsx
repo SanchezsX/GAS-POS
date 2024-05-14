@@ -1,6 +1,7 @@
-import cn from '@/helpers/cn'
-import { PopoverProps } from '@/modals/Types'
 import { useEffect, useRef, type FC } from 'react'
+
+import { cn } from '@/helpers/cn'
+import { PopoverProps } from '@/modals/Types'
 import { createPortal } from 'react-dom'
 
 const Popover: FC<PopoverProps> = ({

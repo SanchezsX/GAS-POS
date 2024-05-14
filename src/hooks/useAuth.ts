@@ -1,7 +1,8 @@
-import { Cashier } from '@/layout/subcomponets/Cashier';
+import { useEffect, useState } from 'react';
+
+import { Cashier } from '@/modals/Types';
 import { supabase } from '@/supabase';
 import { Session } from '@supabase/supabase-js';
-import { useEffect, useState } from 'react';
 
 export const useAuth = () => {
 	const [session, setSession] = useState<Session | null>(null);

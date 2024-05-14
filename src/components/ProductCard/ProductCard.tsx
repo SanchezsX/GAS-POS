@@ -4,8 +4,9 @@ import { CartItem, Goods } from '@/modals/Types'
 import { AnimatePresence, motion } from 'framer-motion'
 
 import ProductCardSetBg from './ProductCardSetBg'
-import cn from '@/helpers/cn'
+
 import CardCounter from '@/components/CardCounter'
+import { cn } from '@/helpers/cn'
 
 const ProductCard = ({ data }: { data: Goods }) => {
   const { cart, create, increment, decrement } = useContext(CartContext)
@@ -19,9 +20,17 @@ const ProductCard = ({ data }: { data: Goods }) => {
     setCurrentItem(item!)
   }, [cart])
 
+
   return (
     <AnimatePresence>
-      <div
+      <motion.div
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{
+          duration: 0.8,
+          delay: 0.1,
+          ease: [0, 0.71, 0.2, 1.01],
+        }}
         className="w-full select-none"
         key={data.good_id}
       >
@@ -48,7 +57,7 @@ const ProductCard = ({ data }: { data: Goods }) => {
             currentItem={currentItem}
           />
         </div>
-      </div>
+      </motion.div>
     </AnimatePresence>
   )
 }

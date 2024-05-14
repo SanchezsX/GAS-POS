@@ -1,5 +1,6 @@
-import cn from '@/helpers/cn'
 import { Dispatch, SetStateAction } from 'react'
+import { cn } from '@/helpers/cn'
+
 
 interface CashierModalProps {
   setPopoverIsOpen: Dispatch<SetStateAction<boolean>>
