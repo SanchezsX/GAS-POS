@@ -1,9 +1,9 @@
-import cn from '@/helpers/cn';
-import type { ButtonHTMLAttributes, FC, ReactNode } from 'react';
+import cn from '@/helpers/cn'
+import type { ButtonHTMLAttributes, FC, ReactNode } from 'react'
 
 interface CustomButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  children: ReactNode;
-  className?: string;
+  children: ReactNode
+  className?: string
 }
 
 const CustomButton: FC<CustomButtonProps> = ({
@@ -24,7 +24,7 @@ const CustomButton: FC<CustomButtonProps> = ({
     >
       {children}
     </button>
-  );
-};
+  )
+}
 
-export default CustomButton;
+export default CustomButton

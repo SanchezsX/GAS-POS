@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react'
 import { CartContext } from '@/providers/CartProvider'
 import { CartItem, Goods } from '@/modals/Types'
+import { AnimatePresence, motion } from 'framer-motion'
 
 import ProductCardSetBg from './ProductCardSetBg'
 import cn from '@/helpers/cn'
@@ -19,34 +20,36 @@ const ProductCard = ({ data }: { data: Goods }) => {
   }, [cart])
 
   return (
-    <div
-      className="w-full"
-      key={data.good_id}
-    >
-      <ProductCardSetBg
-        data={data}
-        create={create}
-        isSelected={isSelected}
-      />
-      <div className="left-3">
-        <h5
-          className={cn(
-            'max-2xl:mt-[5px] text-[18px]',
-            'text-[20px] font-bold mt-[15px] mb-[10px] ml-[10px]'
-          )}
-        >
-          {data.title}
-        </h5>
-        <CardCounter
+    <AnimatePresence>
+      <div
+        className="w-full select-none"
+        key={data.good_id}
+      >
+        <ProductCardSetBg
           data={data}
           create={create}
-          increment={increment}
-          decrement={decrement}
           isSelected={isSelected}
-          currentItem={currentItem}
         />
+        <div className="left-3">
+          <h5
+            className={cn(
+              'max-2xl:mt-[5px] text-[18px]',
+              'text-[20px] font-bold mt-[15px] mb-[10px] ml-[10px] '
+            )}
+          >
+            {data.title}
+          </h5>
+          <CardCounter
+            data={data}
+            create={create}
+            increment={increment}
+            decrement={decrement}
+            isSelected={isSelected}
+            currentItem={currentItem}
+          />
+        </div>
       </div>
-    </div>
+    </AnimatePresence>
   )
 }
 

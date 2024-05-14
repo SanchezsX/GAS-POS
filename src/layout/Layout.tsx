@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 
 import CustomInput from '@/components/CustomInput'
 import useSession from '@/hooks/useSession'
-import Cashier from './subcomponets/Cashier'
+import Cashier from './subcomponets/Cahier/Cashier'
 import Sidebar from './subcomponets/Sidebar'
 import Cart from './subcomponets/cart/Cart'
 
@@ -13,7 +13,6 @@ const Layout = () => {
   const session = useSession()
   const navigate = useNavigate()
   const location = useLocation()
-
 
   function handleFocus() {
     setIsFocus(true)

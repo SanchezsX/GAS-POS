@@ -15,7 +15,6 @@ const CustomInput = ({
   onBlur,
   onChange,
   onFocus,
-  ...props
 }: CustomInputProps) => {
   const [isHidden, setIsHidden] = useState(false)
 
@@ -49,7 +48,6 @@ const CustomInput = ({
         onFocus={onFocus}
         value={value}
         type={isHidden ? 'text' : type}
-        {...props}
       />
       {type === 'password' && (
         <button

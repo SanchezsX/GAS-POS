@@ -125,4 +125,22 @@ export interface Data {
   quantity: number
   icon: string
 }
+export interface ProductCardSetBgProps {
+  data: Goods
+  create: (data: Goods) => void
+  isSelected: boolean
+}
 
+
+export interface CahierAcountProps {
+  cashiers: any
+  cashierIsLoading: boolean
+  ordersCount: number
+  cart: CartItem[]
+}
+
+// export interface CashierModalProps {
+//   cashiers: any
+//   setPopoverIsOpen: Dispatch<SetStateAction<boolean>>
+//   popoverTriggerRef: React.RefObject<HTMLButtonElement>
+// }

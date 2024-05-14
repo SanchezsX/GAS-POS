@@ -1,5 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react'
 
+import { Cashier as CashierType } from '@/modals/Types'
+import { CartContext } from '@/providers/CartProvider'
 import { supabase } from '@/supabase'
 import { toast } from 'sonner'
 import Modal from '@/components/Modal'
@@ -10,11 +12,12 @@ import Icon from '@/components/Icon'
 import Skeleton from '@/components/Skeleton'
 import useSession from '@/hooks/useSession'
 import PopoverCashier from '@/layout/subcomponets/PopoverCashier'
-import ActionModal from './ActionModal'
+
 import useFetching from '@/hooks/useFetching'
-import { CartContext } from '@/providers/CartProvider'
-import { Cashier as CashierType } from '@/modals/Types'
-import { motion } from 'framer-motion'
+import ActionModal from '../ActionModal'
+import CahierAcount from './CahierAcount'
+import CashierModal from './CashierModal'
+import CahierSceleton from './CahierSceleton'
 
 type CashiersStorage = {
   self: CashierType
@@ -157,78 +160,15 @@ const Cashier = () => {
           <p className="font-semibold">Cashier</p>
           <p className="text-[12px] text-white/30">{totalOrdersCount} orders</p>
         </div>
-        <div
-          className={cn(
-            'flex items-center gap-3 bg-[#606366]/20',
-            ' py-[12px] pl-2  rounded-[32px] mt-[9px] mb-[18px]'
-          )}
-        >
-          {cashierIsLoading ? (
-            <Skeleton
-              width="52px"
-              height="52px"
-            />
-          ) : (
-            <div className="size-[52px] overflow-hidden rounded-full">
-              <img
-                src={
-                  cashiers.self?.avatar?.includes('https://')
-                    ? cashiers.self?.avatar
-                    : `/images/Cashier1.png`
-                }
-                alt={cashiers.self?.first_name + ' ' + cashiers.self?.last_name}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          )}
-          <div className="">
-            {!cashiers.self && cashierIsLoading ? (
-              <>
-                <Skeleton
-                  width="120px"
-                  height="27px"
-                  className="mb-2"
-                />
-                <Skeleton
-                  width="100px"
-                  height="16px"
-                />
-              </>
-            ) : (
-              <>
-                <h3 className="text-[18px] font-bold">
-                  {cashiers.self?.first_name + ' ' + cashiers.self?.last_name}
-                </h3>
-                {cart.length > 0 ? (
-                  <p className="text-[11px] text-primary">
-                    Order in progress...{' '}
-                  </p>
-                ) : (
-                  <p className="text-[11px] text-white/30">
-                    Today: {ordersCount} orders{' '}
-                  </p>
-                )}
-              </>
-            )}
-          </div>
-        </div>
-
+        <CahierAcount
+          cashiers={cashiers}
+          cashierIsLoading={cashierIsLoading}
+          ordersCount={ordersCount}
+          cart={cart}
+        />
         <div className="flex gap-4">
           {onDutyIsLoading ? (
-            <>
-              <Skeleton
-                width="52px"
-                height="52px"
-              />
-              <Skeleton
-                width="52px"
-                height="52px"
-              />
-              <Skeleton
-                width="52px"
-                height="52px"
-              />
-            </>
+            <CahierSceleton />
           ) : (
             cashiers.other?.slice(0, 3).map((data) => (
               <button
@@ -264,19 +204,10 @@ const Cashier = () => {
             </button>
           )}
           {cashiers.other?.length >= 3 && (
-            <button
-              ref={popoverTriggerRef}
-              onClick={() => setPopoverIsOpen(true)}
-              className={cn(
-                'bg-[#606366]/20 rounded-[32px] w-[30px] h-[50px] gap-[3px]',
-                'flex flex-col justify-center items-center',
-                'hover:bg-[#606366]/30 transition duration-300 '
-              )}
-            >
-              <div className="w-[4px] h-[4px] rounded-full bg-white"></div>
-              <div className="w-[4px] h-[4px] rounded-full bg-white"></div>
-              <div className="w-[4px] h-[4px] rounded-full bg-white"></div>
-            </button>
+            <CashierModal
+              setPopoverIsOpen={setPopoverIsOpen}
+              popoverTriggerRef={popoverTriggerRef}
+            />
           )}
         </div>
       </div>

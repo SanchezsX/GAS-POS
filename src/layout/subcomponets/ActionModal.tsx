@@ -10,7 +10,7 @@ import CustomButton from '@/components/CustomButton'
 import useFetching from '@/hooks/useFetching'
 import SupaError from '@/modals/Error'
 import Skeleton from '@/components/Skeleton'
-
+import { AnimatePresence, motion } from 'framer-motion'
 interface Error {
   login: SupaError
   logout: SupaError
@@ -80,46 +80,55 @@ const ActionModal: FC<ActionModalPropsCart> = ({
   }
 
   return (
-    <div className="bg-[#181924] w-[450px] h-[450px] flex flex-col justify-center rounded-[50px]">
-      <div className="mx-auto flex flex-col gap-4 ">
-        <h2 className="ml-1 mb-4 text-[30px] font-semibold text-">
-          Enter the password
-        </h2>
-        {!email ? (
-          <Skeleton
-            className="!bg-primary/10"
-            width="200px"
-            height="25px"
-          />
-        ) : (
-          <h4 className="text-primary font-semibold tracking-[1px] ml-1">
-            {email}
-          </h4>
-        )}
-        <form
-          className="flex flex-col gap-6"
-          onSubmit={handleSubmit}
-        >
-          <CustomInput
-            className="w-full"
-            type="password"
-            placeholder="Password"
-            onChange={(event) => setPassword(event.target.value)}
-            value={password}
-            required
-          />
-          <CustomButton className="bg-primary hover:bg-primary/80 text-black">
-            Submit
+    <AnimatePresence>
+      <motion.div
+        key="modalAction"
+        initial={{ scale: 0, rotate: "0deg" }}
+        animate={{ scale: 1, rotate: "0deg" }}
+        exit={{ scale: 0, rotate: "0deg" }}
+        transition={{ duration: 0.5 }}
+        className="bg-[#181924]/90 w-[550px] h-[450px] flex flex-col justify-center rounded-[50px] "
+      >
+        <div className="mx-auto flex flex-col gap-4 ">
+          <h2 className="ml-1 mb-4 text-[30px] font-semibold text-">
+            Enter the password
+          </h2>
+          {!email ? (
+            <Skeleton
+              className="!bg-primary/10"
+              width="200px"
+              height="25px"
+            />
+          ) : (
+            <h4 className="text-primary font-semibold tracking-[1px] ml-1">
+              {email}
+            </h4>
+          )}
+          <form
+            className="flex flex-col gap-6"
+            onSubmit={handleSubmit}
+          >
+            <CustomInput
+              className="w-[400px]"
+              type="password"
+              placeholder="Password"
+              onChange={(event) => setPassword(event.target.value)}
+              value={password}
+              required
+            />
+            <CustomButton className="bg-primary hover:bg-primary/80 text-black">
+              Submit
+            </CustomButton>
+          </form>
+          <CustomButton
+            className="bg-transparent hover:bg-[#DB1057]/20 text-[#DB1057] w-[150px] mx-auto"
+            onClick={logout}
+          >
+            log out
           </CustomButton>
-        </form>
-        <CustomButton
-          className="bg-transparent hover:bg-[#DB1057]/20 text-[#DB1057] w-[150px] mx-auto"
-          onClick={logout}
-        >
-          log out
-        </CustomButton>
-      </div>
-    </div>
+        </div>
+      </motion.div>
+    </AnimatePresence>
   )
 }
 
