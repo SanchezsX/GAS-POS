@@ -36,7 +36,7 @@ const Layout = () => {
           <Sidebar />
           <Cashier />
         </div>
-        <div className="flex flex-col mx-[27px] my-[36px]">
+        <div className="flex flex-col mx-[27px] my-[36px] ">
           <CustomInput
             onFocus={handleFocus}
             onBlur={handleBlur}
@@ -44,6 +44,7 @@ const Layout = () => {
             icon="search.svg"
             onChange={(e) => setSearch(e.target.value)}
             value={search}
+            className='w-[370px]'
             placeholder="Search..."
           />
           <div className="mt-[29px] grid grid-cols-4 gap-6">

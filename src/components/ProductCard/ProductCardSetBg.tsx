@@ -36,7 +36,7 @@ const ProductCardSetBg = ({
           <span
             className={cn(
               'max-2xl:text-[110px] ',
-              'text-[180px] text-[#06090F] font-bold absolute -right-[25px]'
+              'text-[180px] text-[#06090F] font-bold absolute -right-[25px] tracking-[-0.04em] '
             )}
           >
             {data.icon}

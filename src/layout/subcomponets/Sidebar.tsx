@@ -1,13 +1,12 @@
-import type { FC } from 'react'
 import { useLocation } from 'react-router-dom'
 import Section from './Section'
 
-const Sidebar: FC = () => {
+const Sidebar = () => {
   const location = useLocation()
 
   return (
     <div className="bg-sideBg w-[275px] h-[72%] rounded-[39px] p-[20px]">
-      <h1 className="font-bold text-[31px] text-center mt-[45px]">GAS POS</h1>
+      <h1 className="font-bold text-[31px] text-center mt-[35px]">GAS POS</h1>
       <div className="flex flex-col justify-between h-[90%]">
         <div className="flex flex-col mt-[45px]">
           <Section

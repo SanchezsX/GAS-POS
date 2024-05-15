@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 
 import { Link } from 'react-router-dom'
+import { AnimatePresence, motion } from 'framer-motion'
 
 import Icon from '@/components/Icon'
 import { cn } from '@/helpers/cn'
@@ -10,31 +11,35 @@ interface SectionProps {
   children: ReactNode
   pathIcon: string
   to: string
-  
 }
 
 const Section = ({ children, isActive, pathIcon, to }: SectionProps) => {
   return (
-    <>
-      <Link
-        className={cn(
-          'flex gap-3 py-[18px] pl-[20px] rounded-[24px]',
-          'hover:bg-white/5 transition duration-300',
-          isActive
-            ? 'text-primary bg-primary/5 hover:bg-primary/5'
-            : 'text-sideBg text-white'
-        )}
-        to={to}
+    <AnimatePresence>
+      <motion.div
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
       >
-        <Icon
-          width="24px"
-          height="24px"
-          path={pathIcon}
-          color={isActive ? 'bg-primary' : 'bg-white'}
-        />
-        {children}
-      </Link>
-    </>
+        <Link
+          className={cn(
+            'flex gap-3 py-[18px] pl-[20px] ',
+            ' transition duration-300 rounded-[24px]',
+            isActive
+              ? 'text-primary bg-primary/5 hover:bg-primary/5 '
+              : 'text-sideBg text-white '
+          )}
+          to={to}
+        >
+          <Icon
+            width="24px"
+            height="24px"
+            path={pathIcon}
+            color={isActive ? 'bg-primary' : 'bg-white'}
+          />
+          {children}
+        </Link>
+      </motion.div>
+    </AnimatePresence>
   )
 }
 
