@@ -42,8 +42,8 @@ const ProductCard = ({ data }: { data: Goods }) => {
         <div className="left-3">
           <h5
             className={cn(
-              'max-2xl:mt-[5px] text-[18px]',
-              'text-[20px] font-bold mt-[15px] mb-[10px] ml-[10px] '
+              'max-2xl:mt-[5px] max-2xl:text-[16px] text-[18px]',
+              'text-[20px] font-bold mt-[15px] mb-[10px] ml-[10px]'
             )}
           >
             {data.title}

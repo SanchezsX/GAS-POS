@@ -71,7 +71,8 @@ const CardCounter = ({
               onClick={() => create(data)}
               className={cn(
                 ' flex justify-center rounded-[25px] cursor-pointer',
-                'bg-[#FBF8F1]/30 py-[15px] w-[50%]'
+                'bg-[#FBF8F1]/30 py-[15px] w-[50%]',
+                'max-2xl:py-[10px]'
               )}
             >
               <Icon

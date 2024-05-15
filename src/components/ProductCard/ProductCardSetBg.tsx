@@ -14,7 +14,8 @@ const ProductCardSetBg = ({
       className={cn(
         isSelected ? `${iconToColorMap[data.icon]}` : '',
         'p-[11px] rounded-[45px] transition duration-500',
-        'cursor-pointer'
+        'cursor-pointer',
+        'max-2xl:p-[8px]'
       )}
       onClick={() => create(data)}
     >
@@ -29,13 +30,14 @@ const ProductCardSetBg = ({
         {data.icon.startsWith('/') ? (
           <Icon
             path={data.icon}
-            width="100px"
-            height="100px"
+            width=""
+            height=""
+            className={cn('max-2xl:size-[80px]', 'size-[100px]')}
           />
         ) : (
           <span
             className={cn(
-              'max-2xl:text-[110px] ',
+              'max-2xl:text-[110px] max-[1654px]:text-[140px] ',
               'text-[180px] text-[#06090F] font-bold absolute -right-[25px] tracking-[-0.04em] '
             )}
           >

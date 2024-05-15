@@ -1,7 +1,6 @@
 import { FC } from 'react'
 import Icon from '@/components/Icon'
 
-
 interface PopoverItemProps {
   icon: string
   title: string
