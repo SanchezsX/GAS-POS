@@ -27,7 +27,7 @@ const ActionModal: FC<ActionModalPropsCart> = ({
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (error.login) navigate('/login')
+    if (error.login) navigate('/GAS-POS/login')
   }, [error.login])
 
   const [loginFetching, _] = useFetching()
