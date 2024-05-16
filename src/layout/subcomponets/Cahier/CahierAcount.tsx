@@ -1,9 +1,9 @@
 import Skeleton from '@/components/Skeleton'
 import { cn } from '@/helpers/cn'
 
-
 import { CahierAcountProps } from '@/modals/Types'
 
+console.log();
 const CahierAcount = ({
   cashiers,
   cashierIsLoading,

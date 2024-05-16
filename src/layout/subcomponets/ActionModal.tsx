@@ -83,9 +83,9 @@ const ActionModal: FC<ActionModalPropsCart> = ({
     <AnimatePresence>
       <motion.div
         key="modalAction"
-        initial={{ scale: 0, rotate: '0deg' }}
-        animate={{ scale: 1, rotate: '0deg' }}
-        exit={{ scale: 0, rotate: '0deg' }}
+        initial={{ scale: 0.8 }}
+        animate={{ scale: 1 }}
+        exit={{ scale: 0,  }}
         transition={{ duration: 0.3 }}
         className="bg-[#181924]/90 w-[550px] h-[450px] flex flex-col justify-center rounded-[50px] "
       >

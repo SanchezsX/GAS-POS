@@ -79,7 +79,7 @@ const Popover: FC<PopoverProps> = ({
           className="top-0 w-full h-svh absolute bg-black/40 backdrop-blur-[1px]"
         >
           <motion.div
-            initial={{ scale: 0, rotate: '0deg' }}
+            initial={{ scale: 0.8, rotate: '0deg' }}
             animate={{ scale: 1, rotate: '0deg' }}
             exit={{ scale: 0, rotate: '0deg' }}
             transition={{ duration: 0.3 }}

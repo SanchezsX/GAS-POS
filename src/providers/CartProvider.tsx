@@ -198,14 +198,15 @@ export const CartProvider: FC<{ children: ReactNode }> = ({ children }) => {
       })
     }
 
-    ;(async () => {
+    async function updateCart() {
       for (const item of CART_ITEMS || []) {
         if (!cart.some((i) => i.cart_id === item.cart_id)) {
           await supabase.from('carts').delete().eq('cart_id', item.cart_id)
         }
       }
-    })()
-
+    }
+    
+    updateCart()
     getCart()
   }, [cart, CART_PAY])
 

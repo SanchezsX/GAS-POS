@@ -25,6 +25,7 @@ const Layout = () => {
     if (!search) navigate(location.pathname)
   }, [search])
 
+
   useEffect(() => {
     if (session === null) navigate('/login')
   }, [session])

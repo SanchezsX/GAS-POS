@@ -12,8 +12,9 @@ const CartInput = ({
     <div className="relative flex w-[220px] items-center font-semibold">
       <form onSubmit={submitDiscount}>
         <CustomInput
-          className=" w-full pr-12 py-[14px]"
+          className=" w-full pr-12 py-[14px] "
           value={discountValue}
+          
           onChange={(e) => setDiscountValue(e.target.value)}
         />
       </form>

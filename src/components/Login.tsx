@@ -1,4 +1,5 @@
 import { FormEvent, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '@/supabase'
@@ -6,8 +7,8 @@ import CustomButton from '@/components/CustomButton'
 import CustomInput from '@/components/CustomInput'
 
 const Login = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('bilysana7@gmail.com')
+  const [password, setPassword] = useState('sashacashier')
   const [isError, setError] = useState('')
   const navigate = useNavigate()
 
@@ -41,31 +42,41 @@ const Login = () => {
   }
 
   return (
-    <div className="w-full h-svh absolute bg-[url('/images/bg-login.jpg')] bg-no-repeat bg-cover bg-center">
-      <form
-        className="flex flex-col gap-5 w-[400px] items-center mx-auto mt-[300px]"
-        onSubmit={handleSubmit}
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.8 }}
+        className="w-full h-svh absolute bg-[url('/images/bg-login.jpg')] bg-no-repeat bg-cover bg-center"
       >
-        <h2 className="font-bold text-[30px] mb-4">take a shift</h2>
-        <CustomInput
-          className="w-[42vh]"
-          placeholder="Email"
-          isError={isError}
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-        />
-        <CustomInput
-          className="w-[42vh]"
-          placeholder="Password"
-          isError={isError}
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-          type="password"
-        />
-        {isError && <h2 className="text-[#DB1057] font-semibold">{isError}</h2>}
-        <CustomButton>submit</CustomButton>
-      </form>
-    </div>
+        <form
+          className="flex flex-col gap-5 w-[400px] items-center mx-auto mt-[300px]"
+          onSubmit={handleSubmit}
+        >
+          <h2 className="font-bold text-[30px] mb-4">take a shift</h2>
+          <CustomInput
+            className="w-[42vh]"
+            placeholder="Email"
+            isError={isError}
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+          />
+          <CustomInput
+            className="w-[42vh]"
+            placeholder="Password"
+            isError={isError}
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            type="password"
+          />
+          {isError && (
+            <h2 className="text-[#DB1057] font-semibold">{isError}</h2>
+          )}
+          <CustomButton>submit</CustomButton>
+        </form>
+      </motion.div>
+    </AnimatePresence>
   )
 }
 

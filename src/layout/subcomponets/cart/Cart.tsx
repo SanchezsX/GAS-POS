@@ -22,7 +22,7 @@ import { itemVariants, transition } from '@/variants/framerVariants'
 const Cart = () => {
   const { cart, orderId, pay, clearCart } = useContext(CartContext)
   const [isDiscountActive, setIsDiscountActive] = useState(false)
-  const [discountValue, setDiscountValue] = useState('')
+  const [discountValue, setDiscountValue] = useState('324656')
   const [isClicked, setIsClicked] = useState(false)
   const [totalPrice, setTotalPrice] = useState(0)
   const [discount, setDiscount] = useState(0)
@@ -35,7 +35,7 @@ const Cart = () => {
     }, 1000)
     clearCart()
     setDiscount(0)
-    setDiscountValue('')
+    setDiscountValue('324656')
     setIsDiscountActive(false)
     setDiscountTaken(0)
   }
@@ -58,13 +58,13 @@ const Cart = () => {
 
     setDiscount(data[0].discount)
     setIsDiscountActive(false)
-    setDiscountValue('')
+    setDiscountValue('324656')
     setDiscountTaken(0)
   }
 
   function payWithDiscount() {
     pay(() => {
-      setDiscount(0), setDiscountValue(''), setIsDiscountActive(false)
+      setDiscount(0), setDiscountValue('324656'), setIsDiscountActive(false)
       setDiscountTaken(0)
     }, totalPrice)
   }
@@ -150,15 +150,15 @@ const Cart = () => {
               <div className="flex justify-between mb-[20px] relative">
                 <p className="text-white/50 ">Subtotal</p>
                 <motion.p
-                    initial={{ y: -20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -20, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    key={totalPrice}
-                    className="font-semibold text-[20px]"
-                  >
-                   $ {totalPrice}
-                  </motion.p>
+                  initial={{ y: -20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -20, opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  key={totalPrice}
+                  className="font-semibold text-[20px]"
+                >
+                  $ {totalPrice}
+                </motion.p>
                 {/* <div className="flex gap-2">
                   <span className=" font-semibold text-[20px]">$</span>
                   <motion.p

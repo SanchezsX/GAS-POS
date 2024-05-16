@@ -20,7 +20,6 @@ const ProductCard = ({ data }: { data: Goods }) => {
     setCurrentItem(item!)
   }, [cart])
 
-
   return (
     <AnimatePresence>
       <motion.div
@@ -39,11 +38,11 @@ const ProductCard = ({ data }: { data: Goods }) => {
           create={create}
           isSelected={isSelected}
         />
-        <div className="left-3">
+        <div className="left-3 flex flex-col items-end">
           <h5
             className={cn(
               'max-2xl:mt-[5px] max-2xl:text-[16px] text-[18px]',
-              'text-[20px] font-bold mt-[15px] mb-[10px] ml-[10px]'
+              'text-[20px] font-bold mt-[15px] mb-[10px] ml-[10px] flex self-start'
             )}
           >
             {data.title}
