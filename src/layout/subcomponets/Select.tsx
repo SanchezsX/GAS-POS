@@ -2,7 +2,7 @@ import Icon from '@/components/Icon'
 
 import React, { useEffect, useRef, useState } from 'react'
 import { cn } from '@/helpers/cn'
-import { AnimatePresence, motion, useAnimate } from 'framer-motion'
+import { AnimatePresence, motion, } from 'framer-motion'
 interface Option {
   value: string
   label: string

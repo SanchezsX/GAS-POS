@@ -12,5 +12,6 @@ export default defineConfig({
       },
     ]
   },
+  base: '/gas-pos',
   plugins: [react()],
 });

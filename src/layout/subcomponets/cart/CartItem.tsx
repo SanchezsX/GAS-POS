@@ -1,6 +1,6 @@
 import Icon from '@/components/Icon'
 import Skeleton from '@/components/Skeleton'
-import { cn } from '@/helpers/cn'
+
 
 import { CartItemProps } from '@/modals/Types'
 import { AnimatePresence, motion } from 'framer-motion'
