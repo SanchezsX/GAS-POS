@@ -11,22 +11,22 @@ const Sidebar = () => {
         <div className="flex flex-col mt-[45px]">
           <Section
             pathIcon="fuel.svg"
-            isActive={location.pathname === '/fuel'}
-            to="/fuel"
+            isActive={location.pathname === '/GAS-POS/fuel'}
+            to="/GAS-POS/fuel"
           >
             Fuel
           </Section>
           <Section
             pathIcon="food.svg"
-            isActive={location.pathname === '/food'}
-            to="/food"
+            isActive={location.pathname === '/GAS-POS/food'}
+            to="/GAS-POS/food"
           >
             Food
           </Section>
           <Section
             pathIcon="drink.svg"
-            isActive={location.pathname === '/drink'}
-            to="/drink"
+            isActive={location.pathname === '/GAS-POS/drink'}
+            to="/GAS-POS/drink"
           >
             Drinks
           </Section>
@@ -34,15 +34,15 @@ const Sidebar = () => {
         <div className="flex flex-col mb-[45px]">
           <Section
             pathIcon="services.svg"
-            isActive={location.pathname === '/service'}
-            to="/service"
+            isActive={location.pathname === '/GAS-POS/service'}
+            to="/GAS-POS/service"
           >
             Service
           </Section>
           <Section
             pathIcon="help.svg"
-            isActive={location.pathname === '/help'}
-            to="/help"
+            isActive={location.pathname === '/GAS-POS/help'}
+            to="/GAS-POS/help"
           >
             Help
           </Section>

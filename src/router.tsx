@@ -14,23 +14,23 @@ export const router = createBrowserRouter([
     errorElement: '',
     children: [
       {
-        path: '/fuel',
+        path: '/GAS-POS/fuel',
         element: <Main />,
       },
       {
-        path: '/food',
+        path: '/GAS-POS/food',
         element: <Food />,
       },
       {
-        path: '/drink',
+        path: '/GAS-POS/drink',
         element: <Drinks />,
       },
       {
-        path: '/service',
+        path: '/GAS-POS/service',
         element: <Service />,
       },
       {
-        path: '/help',
+        path: '/GAS-POS/help',
         element: <Help />,
       },
     ],

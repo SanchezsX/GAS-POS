@@ -3,8 +3,6 @@ import { IconProps } from '@/modals/Types'
 import { cn } from '@/helpers/cn'
 
 
-
-
 const Icon: FC<IconProps> = ({
   width,
   height,
@@ -22,7 +20,7 @@ const Icon: FC<IconProps> = ({
         color.charAt(0) !== '#' ? color : ''
       )}
       style={{
-        maskImage: `url("/icons/${path}")`,
+        maskImage: `url("./icons/${path}")`,
         backgroundColor: color.charAt(0) === '#' ? color : '',
         width,
         height,
