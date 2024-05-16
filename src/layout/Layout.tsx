@@ -27,6 +27,7 @@ const Layout = () => {
 
   useEffect(() => {
     if (session === null) navigate('/GAS-POS/login')
+    if (session) navigate('/GAS-POS/fuel')
   }, [session])
 
   return (
