@@ -41,7 +41,7 @@ export const router = createBrowserRouter([
     errorElement: '',
     children: [
       {
-        path: 'login',
+        path: '/GAS-POS/login',
         element: <PageLogin />,
       },
     ],
