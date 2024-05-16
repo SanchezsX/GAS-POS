@@ -20,7 +20,7 @@ const Login = () => {
     if (error) {
       setError(error.message)
     } else {
-      navigate('/fuel')
+      navigate('/GAS-POS/fuel')
       getCashiers(data.user.id)
     }
   }

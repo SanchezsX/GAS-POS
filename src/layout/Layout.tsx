@@ -25,9 +25,8 @@ const Layout = () => {
     if (!search) navigate(location.pathname)
   }, [search])
 
-
   useEffect(() => {
-    if (session === null) navigate('/login')
+    if (session === null) navigate('/GAS-POS/login')
   }, [session])
 
   return (
@@ -45,7 +44,7 @@ const Layout = () => {
             icon="search.svg"
             onChange={(e) => setSearch(e.target.value)}
             value={search}
-            className='w-[370px]'
+            className="w-[370px]"
             placeholder="Search..."
           />
           <div className="mt-[29px] grid grid-cols-4 gap-6">
