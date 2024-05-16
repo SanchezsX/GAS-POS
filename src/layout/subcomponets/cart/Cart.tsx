@@ -137,7 +137,7 @@ const Cart = () => {
               animate="animate"
               exit="exit"
               transition={transition}
-              src="/icons/line.svg"
+              src="./icons/line.svg"
             />
             <motion.div
               variants={itemVariants}
@@ -198,7 +198,7 @@ const Cart = () => {
                   />
                 )}
               </div>
-              <motion.img src="/icons/line.svg" />
+              <motion.img src="./icons/line.svg" />
             </motion.div>
             <CartTotalPaySummary totalPrice={totalPrice} />
           </>

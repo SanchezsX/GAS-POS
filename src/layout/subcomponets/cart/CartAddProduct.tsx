@@ -12,7 +12,7 @@ const CartAddProduct = () => {
       >
         <img
           className="pt-auto"
-          src="/images/cart-gas.png"
+          src="./images/cart-gas.png"
           alt=""
         />
         <h4 className="font-semibold text-[20px]">Add products to the cart</h4>
