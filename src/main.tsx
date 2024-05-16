@@ -18,7 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     />
     <QueryClientProvider client={queryClient}>
       <CartProvider>
-        <RouterProvider router={router}/>
+        <RouterProvider router={router}   />
       </CartProvider>
     </QueryClientProvider>
   </>
