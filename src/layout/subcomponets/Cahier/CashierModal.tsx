@@ -12,7 +12,6 @@ const CashierModal = ({
   popoverTriggerRef,
 }: CashierModalProps) => {
   return (
-
       <button
 
         ref={popoverTriggerRef}
