@@ -25,12 +25,12 @@ const CardCounter = ({
       <AnimatePresence>
         {isSelected ? (
           <motion.div
-          initial={{ width: '0%', transformOrigin: 'right' }}
-          animate={{ width: '100%', transformOrigin: 'right' }}
-          exit={{ opacity: 1 }}
-          transition={{ duration: 0.4 }}
+            initial={{ width: '0%', transformOrigin: 'right' }}
+            animate={{ width: '100%', transformOrigin: 'right' }}
+            exit={{ opacity: 1 }}
+            transition={{ duration: 0.4 }}
             className={cn(
-              'w-[95%] px-[15px] py-[8px] ml-[7px]',
+              'w-[95%] px-[15px] py-[8px] ml-[7px] ',
               'rounded-[20px] border-solid border-2 border-[#ffff]/5',
               'bg-[#1A1D22] flex items-center justify-between'
             )}
@@ -42,11 +42,26 @@ const CardCounter = ({
               className="cursor-pointer"
               onClick={() => decrement(data.good_id)}
             />
-            <p>
+            <p className="flex">
               {data.type === 1 && (
                 <span className="opacity-40 mr-[5px]">V:</span>
               )}
-              {currentItem.quantity}
+              <motion.p
+                initial={
+                  currentItem.quantity === 10 
+                    ? { y: 0, opacity: 1 }
+                    : { y: -20, opacity: 0 }
+                }
+                animate={
+                  currentItem.quantity === 10 
+                    ? { y: 0, opacity: 1 }
+                    : { y: 0, opacity: 1 }
+                }
+                transition={{ duration: 0.3 }}
+                key={currentItem.quantity}
+              >
+                {currentItem.quantity}
+              </motion.p>
               {data.type === 1 && <span className="ml-[3px]">l</span>}
             </p>
             <Icon

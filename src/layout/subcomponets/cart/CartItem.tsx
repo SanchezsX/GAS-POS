@@ -8,6 +8,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { CartContext } from '@/providers/CartProvider'
 import { useContext } from 'react'
 import { itemVariants, transition } from '@/variants/framerVariants'
+import CartCounter from './CartCounter'
 
 const SELECR_COLOR_HEX: object = {
   1: 'rgba(96, 188, 148, 0.1)',
@@ -71,34 +72,11 @@ const CartItem = ({ data }: CartItemProps) => {
                 <h4 className="text-[20px] font-semibold">
                   {data.goods.title}
                 </h4>
-                <div
-                  className={cn(
-                    'w-[130px] px-[15px] py-[8px] mt-3',
-                    'rounded-[20px] border-solid border-2 border-[#ffff]/5',
-                    'bg-[#ffff]/5 flex items-center justify-between'
-                  )}
-                >
-                  <Icon
-                    width="20px"
-                    height="20px"
-                    path="minus.svg"
-                    className="cursor-pointer"
-                    onClick={() => decrement(data.good_id)}
-                  />
-                  <p>
-                    {data.goods.type === 1 && (
-                      <span className="opacity-40 mr-[5px]">V:</span>
-                    )}
-                    {data.quantity}
-                  </p>
-                  <Icon
-                    width="18px"
-                    height="18px"
-                    path="plus.svg"
-                    className="cursor-pointer "
-                    onClick={() => increment(data.good_id)}
-                  />
-                </div>
+                <CartCounter
+                  data={data}
+                  increment={increment}
+                  decrement={decrement}
+                />
               </div>
             </div>
             <p className="text-[20px] font-semibold">$ {data.goods.price}</p>

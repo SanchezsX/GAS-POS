@@ -2,8 +2,6 @@ import CustomInput from '@/components/CustomInput'
 import Icon from '@/components/Icon'
 import { CartInputProps } from '@/modals/Types'
 
-
-
 const CartInput = ({
   submitDiscount,
   discountValue,
