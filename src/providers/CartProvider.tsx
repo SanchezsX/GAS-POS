@@ -105,7 +105,11 @@ export const CartProvider: FC<{ children: ReactNode }> = ({ children }) => {
       .update({ status: 'success', price })
       .eq('order_id', orderId)
 
-    if (error) return toast.error(error.message)
+    if (error) {
+      return toast.error(error.message)
+    } else {
+      toast.success('Payment success!')
+    }
 
     CART_PAY = true
     setOrderId(null)
@@ -205,7 +209,7 @@ export const CartProvider: FC<{ children: ReactNode }> = ({ children }) => {
         }
       }
     }
-    
+
     updateCart()
     getCart()
   }, [cart, CART_PAY])

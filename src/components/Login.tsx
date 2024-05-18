@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { supabase } from '@/supabase'
 import CustomButton from '@/components/CustomButton'
 import CustomInput from '@/components/CustomInput'
+import { toast } from 'sonner'
 
 const Login = () => {
   const [email, setEmail] = useState('bilysana7@gmail.com')
@@ -22,6 +23,9 @@ const Login = () => {
     } else {
       navigate('/GAS-POS/fuel')
       getCashiers(data.user.id)
+      toast.success(
+        'You are change an account!, if producs not found, please reload the page'
+      )
     }
   }
   const getCashiers = async (id: string) => {
