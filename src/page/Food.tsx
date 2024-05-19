@@ -67,7 +67,7 @@ const Food = () => {
       {error ? (
         <div>{error.message}</div>
       ) : isLoading ? (
-        [...Array(8)].map((_, i) => <SectionSceleton i={i} />)
+        [...Array(8)].map((_, i) => <SectionSceleton i={i} key={i} />)
       ) : (
         goods.map((data) => (
           <ProductCard

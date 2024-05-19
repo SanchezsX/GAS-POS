@@ -16,7 +16,6 @@ export const CartContext = createContext<CartContextValues>(
 export const CartProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [cart, setCart] = useState<CartItem[]>([])
   const [orderId, setOrderId] = useState<number | null>(null)
-
   const { cashier } = useAuth()
 
   async function create(goods: Goods) {
@@ -28,6 +27,7 @@ export const CartProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
       if (error) {
         toast.error(error.message)
+
         return
       }
 
@@ -45,8 +45,9 @@ export const CartProvider: FC<{ children: ReactNode }> = ({ children }) => {
       return setOrderId(data?.[0].order_id)
     }
 
-    if (cart.some((i) => i.good_id === goods.good_id))
+    if (cart.some((i) => i.good_id === goods.good_id)) {
       return remove(goods.good_id)
+    }
 
     if (orderId) {
       setCart([
@@ -106,7 +107,9 @@ export const CartProvider: FC<{ children: ReactNode }> = ({ children }) => {
       .eq('order_id', orderId)
 
     if (error) {
-      return toast.error(error.message)
+      toast.error(error.message)
+
+      return
     } else {
       toast.success('Payment success!')
     }
@@ -123,13 +126,19 @@ export const CartProvider: FC<{ children: ReactNode }> = ({ children }) => {
       .update({ status: 'canceled' })
       .eq('order_id', orderId)
 
-    if (error) return toast.error(error.message)
+    if (error) {
+      toast.error(error.message)
+
+      return
+    }
+
     CART_PAY = true
     setOrderId(null)
     setCart([])
   }
 
   async function selectOrder() {
+    console.log('Selecting order for cashier:', cashier?.cashier_id)
     if (cashier?.cashier_id) {
       const { data, error } = await supabase
         .from('orders')
@@ -137,7 +146,13 @@ export const CartProvider: FC<{ children: ReactNode }> = ({ children }) => {
         .eq('cashier_id', cashier.cashier_id)
         .eq('status', 'pending')
 
-      if (error) return toast.error(error.message)
+      if (error) {
+        toast.error(error.message)
+        console.error('Error selecting order:', error.message)
+        return
+      }
+
+      console.log('Selected orderId:', data?.[0]?.order_id)
       setOrderId(data?.[0]?.order_id)
     }
   }
@@ -147,14 +162,20 @@ export const CartProvider: FC<{ children: ReactNode }> = ({ children }) => {
   }, [cashier?.cashier_id])
 
   async function selectCartItems() {
+    console.log('Selecting cart items for orderId:', orderId)
     if (orderId) {
       const { data, error } = await supabase
         .from('carts')
         .select(`*, goods(*)`)
         .eq('order_id', orderId)
 
-      if (error) return toast.error(error.message)
+      if (error) {
+        toast.error(error.message)
+        console.error('Error selecting cart items:', error.message)
+        return
+      }
 
+      console.log('Selected cart items:', data)
       CART_ITEMS = data
       setCart(data as CartItem[])
     }
@@ -171,7 +192,13 @@ export const CartProvider: FC<{ children: ReactNode }> = ({ children }) => {
         .select(`*, goods(*)`)
         .eq('order_id', orderId)
 
-      if (error) return toast.error(error.message)
+      if (error) {
+        toast.error(error.message)
+
+        return
+      }
+
+      console.log('Got cart items:', data)
       CART_ITEMS = data
     }
   }
@@ -189,9 +216,7 @@ export const CartProvider: FC<{ children: ReactNode }> = ({ children }) => {
             .from('carts')
             .update({ quantity: item.quantity })
             .eq('cart_id', item.cart_id)
-        }
-
-        if (!CART_ITEMS?.some((i) => i.cart_id === item.cart_id)) {
+        } else {
           await supabase.from('carts').insert({
             cart_id: item.cart_id,
             order_id: item.order_id,

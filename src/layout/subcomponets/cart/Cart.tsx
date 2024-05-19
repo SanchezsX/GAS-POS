@@ -29,10 +29,10 @@ const Cart = () => {
   const [discountTaken, setDiscountTaken] = useState(0)
 
   const handleClick = () => {
-    setIsClicked(true)
     setTimeout(() => {
       setIsClicked(false)
     }, 1000)
+    setIsClicked(true)
     clearCart()
     setDiscount(0)
     setDiscountValue('324656')

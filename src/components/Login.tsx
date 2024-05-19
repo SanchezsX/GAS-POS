@@ -21,9 +21,9 @@ const Login = () => {
     if (error) {
       setError(error.message)
     } else {
-      navigate('/GAS-POS/fuel')
       getCashiers(data.user.id)
       toast.success('If producs were not added, please reload the page')
+      if (data.user.id) navigate('/GAS-POS/fuel')
     }
   }
   const getCashiers = async (id: string) => {
