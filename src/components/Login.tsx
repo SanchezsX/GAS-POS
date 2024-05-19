@@ -23,9 +23,7 @@ const Login = () => {
     } else {
       navigate('/GAS-POS/fuel')
       getCashiers(data.user.id)
-      toast.success(
-        'You are change an account!, if producs not found, please reload the page'
-      )
+      toast.success('If producs were not added, please reload the page')
     }
   }
   const getCashiers = async (id: string) => {
