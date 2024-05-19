@@ -23,7 +23,7 @@ const Login = () => {
     } else {
       getCashiers(data.user.id)
       toast.success('If producs were not added, please reload the page')
-      if (data.user.id) navigate('/GAS-POS/fuel')
+      if (data.user.id) return navigate('/GAS-POS/fuel')
     }
   }
   const getCashiers = async (id: string) => {
@@ -38,9 +38,9 @@ const Login = () => {
     }
   }
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    loginCashiers()
+    await loginCashiers()
   }
 
   return (
