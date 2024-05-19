@@ -24,6 +24,7 @@ const Login = () => {
       getCashiers(data.user.id)
       toast.success('If producs were not added, please reload the page')
       if (data.user.id) return navigate('/GAS-POS/fuel')
+      console.log(data.user.id)
     }
   }
   const getCashiers = async (id: string) => {
