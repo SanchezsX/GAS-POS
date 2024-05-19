@@ -172,12 +172,12 @@ const Cashier = () => {
           {onDutyIsLoading ? (
             <CahierSceleton />
           ) : (
-            cashiers.other?.slice(0, 3).map((data) => (
+            cashiers.other?.slice(0, 3).map((data, index) => (
               <AnimatePresence>
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 10 }}
-                  key={data.user_id}
+                  key={index}
                   onClick={() => modalHandle(data.user_id)}
                   className="w-[52px] h-[52px] overflow-hidden rounded-full"
                 >
