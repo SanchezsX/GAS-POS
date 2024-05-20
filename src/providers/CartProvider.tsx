@@ -61,6 +61,12 @@ export const CartProvider: FC<{ children: ReactNode }> = ({ children }) => {
         },
       ])
     }
+
+    if (!orderId && !cart.length) {
+      toast.error('reload the page')
+
+      window.location.reload()
+    }
   }
 
   function remove(goodId: number) {
