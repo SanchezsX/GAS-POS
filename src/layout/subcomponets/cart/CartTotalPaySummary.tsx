@@ -18,7 +18,7 @@ const CartTotalPaySummary = ({ totalPrice }: { totalPrice: number }) => {
           initial="initial"
           animate="animate"
           exit="exit"
-          transition={{ duration: 0.4 }}
+          transition={{ duration: 0.3 }}
           key={totalPrice}
           className="text-[25px] font-semibold"
         >
