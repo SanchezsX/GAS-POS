@@ -11,6 +11,8 @@ import useFetching from '@/hooks/useFetching'
 import SupaError from '@/modals/Error'
 import Skeleton from '@/components/Skeleton'
 import { AnimatePresence, motion } from 'framer-motion'
+import { setModalIsOpen } from '@/store/cartSlice'
+import { useDispatch } from 'react-redux'
 interface Error {
   login: SupaError
   logout: SupaError
@@ -19,14 +21,16 @@ interface Error {
 const ActionModal: FC<ActionModalPropsCart> = ({
   userId,
   email,
-  setIsOpen,
+  
 }) => {
   const [error, setError] = useState<Error>({} as Error)
   const [password, setPassword] = useState('')
+  const dispatch = useDispatch()
 
   const navigate = useNavigate()
 
   useEffect(() => {
+    
     if (error.login) navigate('/GAS-POS/login')
   }, [error.login])
 
@@ -53,8 +57,13 @@ const ActionModal: FC<ActionModalPropsCart> = ({
         return
       }
 
-      toast.success('You are change an account!')
-      setIsOpen(false)
+      dispatch(setModalIsOpen(false))
+      toast.success('You are change an account!',{
+        style: {
+          background: '#1C1E24',
+          color: '#60BC94',
+        },
+      })
     })
   }
 
@@ -74,7 +83,7 @@ const ActionModal: FC<ActionModalPropsCart> = ({
         return
       }
 
-      setIsOpen(false)
+      dispatch(setModalIsOpen(false))
       toast.success("You're off shift!")
     })
   }

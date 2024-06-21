@@ -7,8 +7,8 @@ import { CartButtonProps } from '@/modals/Types'
 import { itemVariants, transition } from '@/variants/framerVariants'
 
 const CartButton = ({
-  handleClick,
-  payWithDiscount,
+  handlRefresh,
+  pay,
   isClicked,
 }: CartButtonProps) => {
   return (
@@ -22,7 +22,7 @@ const CartButton = ({
         className="flex gap-3 mt-auto"
       >
         <CustomButton
-          onClick={handleClick}
+          onClick={handlRefresh}
           className="rounded-[30px] w-[15vh] justify-center flex items-center bg-white/5 hover:bg-white/10 "
         >
           <Icon
@@ -36,7 +36,7 @@ const CartButton = ({
             )}
           />
         </CustomButton>
-        <CustomButton onClick={() => payWithDiscount()}>Pay</CustomButton>
+        <CustomButton onClick={() => pay()}>Pay</CustomButton>
       </motion.div>
     </AnimatePresence>
   )

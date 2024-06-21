@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 
 import { useNavigate } from 'react-router-dom'
@@ -6,24 +6,35 @@ import { supabase } from '@/supabase'
 import CustomButton from '@/components/CustomButton'
 import CustomInput from '@/components/CustomInput'
 import { toast } from 'sonner'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '@/store/store'
+import {
+  setEmail,
+  setError,
+  setModalIsOpen,
+  setPassword,
+  setPopoverIsOpen,
+} from '@/store/cartSlice'
 
 const Login = () => {
-  const [email, setEmail] = useState('bilysana7@gmail.com')
-  const [password, setPassword] = useState('sashacashier')
-  const [isError, setError] = useState('')
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
+  const { email, password, isError } = useSelector(
+    (state: RootState) => state.cart
+  )
   const loginCashiers = async () => {
     const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
     })
     if (error) {
-      setError(error.message)
+      dispatch(setError(error.message))
     } else {
       getCashiers(data.user.id)
       toast.success('If producs were not added, please reload the page')
-
+      dispatch(setPopoverIsOpen(false))
+      dispatch(setModalIsOpen(false))
       if (data.user.id) return navigate('/GAS-POS/fuel')
     }
   }
@@ -38,7 +49,6 @@ const Login = () => {
       console.log(data)
     }
   }
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     await loginCashiers()
@@ -62,14 +72,14 @@ const Login = () => {
             className="w-[42vh]"
             placeholder="Email"
             isError={isError}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => dispatch(setEmail(e.target.value))}
             value={email}
           />
           <CustomInput
             className="w-[42vh]"
             placeholder="Password"
             isError={isError}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => dispatch(setPassword(e.target.value))}
             value={password}
             type="password"
           />

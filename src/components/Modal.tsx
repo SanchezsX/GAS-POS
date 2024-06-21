@@ -2,11 +2,14 @@ import type { FC, MouseEvent } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ModalProps } from '@/modals/Types'
 import { cn } from '@/helpers/cn'
+import { setModalIsOpen } from '@/store/cartSlice'
+import { useDispatch } from 'react-redux'
 
-const Modal: FC<ModalProps> = ({ isOpen, setIsOpen, children }) => {
+const Modal: FC<ModalProps> = ({ isOpen, children }) => {
+  const dispatch = useDispatch()
   const handleContainerClick = (e: MouseEvent | any) => {
     if (e.target === e.currentTarget) {
-      setIsOpen(false)
+      dispatch(setModalIsOpen(false))
     }
   }
 

@@ -1,5 +1,8 @@
 import { SyntheticEvent, useContext, useEffect, useState } from 'react'
-import { CartContext } from '@/providers/CartProvider'
+// import { CartContext } from '@/providers/CartProvider'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '@/store/store'
+import { clearCart, setDiscount, setDiscountTaken } from '@/store/cartSlice'
 import { supabase } from '@/supabase'
 import { toast } from 'sonner'
 import CustomButton from '@/components/CustomButton'
@@ -16,25 +19,29 @@ import CartButton from './CartButton'
 import CartAddProduct from './CartAddProduct'
 import { cn } from '@/helpers/cn'
 import { itemVariants, transition } from '@/variants/framerVariants'
+import usePay from '@/hooks/usePay'
 
 // type OrderStatus = 'pending' | 'success' | 'canceled';
 
 const Cart = () => {
-  const { cart, orderId, pay, clearCart } = useContext(CartContext)
+  // const { cart, orderId, pay, clearCart } = useContext(CartContext)
+  const dispatch = useDispatch()
+  const { cart, orderId, discount, discountTaken } = useSelector(
+    (state: RootState) => state.cart
+  )
+
   const [isDiscountActive, setIsDiscountActive] = useState(false)
   const [discountValue, setDiscountValue] = useState('324656')
   const [isClicked, setIsClicked] = useState(false)
   const [totalPrice, setTotalPrice] = useState(0)
-  const [discount, setDiscount] = useState(0)
-  const [discountTaken, setDiscountTaken] = useState(0)
 
-  const handleClick = () => {
+  const handlRefresh = () => {
     setTimeout(() => {
       setIsClicked(false)
     }, 1000)
     setIsClicked(true)
-    clearCart()
-    setDiscount(0)
+    dispatch(clearCart())
+    dispatch(setDiscount(0))
     setDiscountValue('324656')
     setIsDiscountActive(false)
     setDiscountTaken(0)
@@ -56,18 +63,18 @@ const Cart = () => {
       return toast.error('Not valid code card!')
     }
 
-    setDiscount(data[0].discount)
+    dispatch(setDiscount(data[0].discount))
     setIsDiscountActive(false)
     setDiscountValue('324656')
     setDiscountTaken(0)
   }
 
-  function payWithDiscount() {
-    pay(() => {
-      setDiscount(0), setDiscountValue('324656'), setIsDiscountActive(false)
-      setDiscountTaken(0)
-    }, totalPrice)
-  }
+  const pay = usePay(() => {
+    dispatch(setDiscount(0)),
+      setDiscountValue('324656'),
+      setIsDiscountActive(false)
+    setDiscountTaken(0)
+  }, totalPrice)
 
   useEffect(() => {
     let cartTotal = 0
@@ -213,8 +220,8 @@ const Cart = () => {
           </CustomButton>
         ) : (
           <CartButton
-            handleClick={handleClick}
-            payWithDiscount={payWithDiscount}
+            handlRefresh={handlRefresh}
+            pay={pay}
             isClicked={isClicked}
           />
         )}

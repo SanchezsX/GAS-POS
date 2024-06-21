@@ -3,13 +3,15 @@ import { cn } from '@/helpers/cn'
 
 import { CahierAcountProps } from '@/modals/Types'
 
-console.log();
+
 const CahierAcount = ({
   cashiers,
   cashierIsLoading,
   ordersCount,
   cart,
 }: CahierAcountProps) => {
+// console.log(cashiers);
+
   return (
     <div
       className={cn(
@@ -34,6 +36,7 @@ const CahierAcount = ({
             className="w-full h-full object-cover"
           />
         </div>
+        
       )}
       <div>
         {!cashiers.self && cashierIsLoading ? (
@@ -67,4 +70,5 @@ const CahierAcount = ({
   )
 }
 
+  
 export default CahierAcount

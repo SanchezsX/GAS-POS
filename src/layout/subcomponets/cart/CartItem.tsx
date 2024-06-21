@@ -1,12 +1,11 @@
 import Icon from '@/components/Icon'
 import Skeleton from '@/components/Skeleton'
 
-
 import { CartItemProps } from '@/modals/Types'
 import { AnimatePresence, motion } from 'framer-motion'
 
-import { CartContext } from '@/providers/CartProvider'
-import { useContext } from 'react'
+// import { CartContext } from '@/providers/CartProvider'
+// import { useContext } from 'react'
 import { itemVariants, transition } from '@/variants/framerVariants'
 import CartCounter from './CartCounter'
 
@@ -21,7 +20,8 @@ const SELECR_COLOR_RGBA: object = {
   3: '#6492EC',
 }
 const CartItem = ({ data }: CartItemProps) => {
-  const { increment, decrement } = useContext(CartContext)
+
+
   function getCurrentColor(type: any, selectColor: any) {
     for (const property in SELECR_COLOR_HEX) {
       if (property == type) {
@@ -72,11 +72,7 @@ const CartItem = ({ data }: CartItemProps) => {
                 <h4 className="text-[20px] font-semibold">
                   {data.goods.title}
                 </h4>
-                <CartCounter
-                  data={data}
-                  increment={increment}
-                  decrement={decrement}
-                />
+                <CartCounter data={data} />
               </div>
             </div>
             <p className="text-[20px] font-semibold">$ {data.goods.price}</p>

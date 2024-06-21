@@ -8,8 +8,8 @@ export const useAuth = () => {
 	const [session, setSession] = useState<Session | null>(null);
 	const [cashier, setCashier] = useState<Cashier | null>(null);
 
-
 	async function gets() {
+	try {
 		const { data: { session } } = await supabase.auth.getSession();
 		const { data } = await supabase
 			.from('cashiers')
@@ -18,6 +18,9 @@ export const useAuth = () => {
 
 		setSession(session);
 		setCashier(data?.[0]);
+	}catch (error) {
+		console.error(error);
+	}	
 	}
 
 	useEffect(() => {

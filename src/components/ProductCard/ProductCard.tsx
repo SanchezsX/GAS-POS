@@ -1,24 +1,23 @@
-import { useState, useEffect, useContext } from 'react'
-import { CartContext } from '@/providers/CartProvider'
+import { useState, useEffect } from 'react'
 import { CartItem, Goods } from '@/modals/Types'
 import { AnimatePresence, motion } from 'framer-motion'
-
 import ProductCardSetBg from './ProductCardSetBg'
-
 import CardCounter from '@/components/CardCounter'
 import { cn } from '@/helpers/cn'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store/store'
 
 const ProductCard = ({ data }: { data: Goods }) => {
-  const { cart, create, increment, decrement } = useContext(CartContext)
-  const [currentItem, setCurrentItem] = useState<CartItem>({} as CartItem)
+  const cart = useSelector((state: RootState) => state.cart.cart)
+  const [currentItem, setCurrentItem] = useState<CartItem | null>(null)
   const [isSelected, setIsSelected] = useState(false)
-
   useEffect(() => {
-    const item = cart.find((i) => i.good_id === data.good_id)
-
-    setIsSelected(!!item)
-    setCurrentItem(item!)
-  }, [cart])
+    if (Array.isArray(cart)) {
+      const item = cart.find((i) => i.good_id === data.good_id)
+      setIsSelected(!!item)
+      setCurrentItem(item || null)
+    }
+  }, [cart, data.good_id])
 
   return (
     <AnimatePresence>
@@ -35,7 +34,6 @@ const ProductCard = ({ data }: { data: Goods }) => {
       >
         <ProductCardSetBg
           data={data}
-          create={create}
           isSelected={isSelected}
         />
         <div className="left-3 flex flex-col items-end">
@@ -49,9 +47,6 @@ const ProductCard = ({ data }: { data: Goods }) => {
           </h5>
           <CardCounter
             data={data}
-            create={create}
-            increment={increment}
-            decrement={decrement}
             isSelected={isSelected}
             currentItem={currentItem}
           />

@@ -1,21 +1,22 @@
-import { Dispatch, SetStateAction } from 'react'
+
 import { cn } from '@/helpers/cn'
-
-
+import { setPopoverIsOpen } from '@/store/cartSlice'
+import { useDispatch } from 'react-redux'
 interface CashierModalProps {
-  setPopoverIsOpen: Dispatch<SetStateAction<boolean>>
+  setPopoverIsOpen: (isOpen: boolean) => void
   popoverTriggerRef: React.RefObject<HTMLButtonElement>
 }
 
 const CashierModal = ({
-  setPopoverIsOpen,
+  // setPopoverIsOpen,
   popoverTriggerRef,
 }: CashierModalProps) => {
+
+  const dispatch = useDispatch()
   return (
       <button
-
         ref={popoverTriggerRef}
-        onClick={() => setPopoverIsOpen(true)}
+        onClick={() => dispatch(setPopoverIsOpen(true))}
         className={cn(
           'bg-[#606366]/20 rounded-[32px] w-[30px] h-[50px] gap-[3px]',
           'flex flex-col justify-center items-center',

@@ -1,15 +1,17 @@
 import { cn } from '@/helpers/cn'
 import Icon from '@/components/Icon'
 import { AnimatePresence, motion } from 'framer-motion'
-import { itemVariants, transition } from '@/variants/framerVariants'
+import { decrementQuantity, incrementQuantity } from '@/store/cartSlice'
+import { useDispatch } from 'react-redux'
+
+
 
 interface CartCounterProps {
   data: any
-  increment: any
-  decrement: any
 }
 
-const CartCounter = ({ data, increment, decrement }: CartCounterProps) => {
+const CartCounter = ({ data}: CartCounterProps) => {
+  const Dispatch = useDispatch()
   return (
     <AnimatePresence>
       <div
@@ -24,13 +26,13 @@ const CartCounter = ({ data, increment, decrement }: CartCounterProps) => {
           height="20px"
           path="minus.svg"
           className="cursor-pointer"
-          onClick={() => decrement(data.good_id)}
+          onClick={() => Dispatch(decrementQuantity(data.good_id))}
         />
         <p className="flex">
           {data.goods.type === 1 && (
             <span className="opacity-40 mr-[5px]">V:</span>
           )}
-          <motion.p
+          <motion.span
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -38,14 +40,14 @@ const CartCounter = ({ data, increment, decrement }: CartCounterProps) => {
             key={data.quantity}
           >
             {data.quantity}
-          </motion.p>
+          </motion.span>
         </p>
         <Icon
           width="18px"
           height="18px"
           path="plus.svg"
           className="cursor-pointer "
-          onClick={() => increment(data.good_id)}
+          onClick={() => Dispatch(incrementQuantity(data.good_id))}
         />
       </div>
     </AnimatePresence>

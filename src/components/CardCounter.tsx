@@ -1,25 +1,24 @@
-import { CartItem, Goods } from '@/modals/Types'
+import {  Goods } from '@/modals/Types'
 import { cn } from '@/helpers/cn'
 import Icon from './Icon'
 import { AnimatePresence, motion } from 'framer-motion'
+import useCreate from '@/hooks/useCreate'
+import { useDispatch } from 'react-redux'
+import { decrementQuantity, incrementQuantity } from '@/store/cartSlice'
 
 interface CardCounterProps {
   data: Goods
-  create: (data: Goods) => void
-  increment: (id: number) => void
-  decrement: (id: number) => void
   isSelected: boolean
-  currentItem: CartItem
+  currentItem: any
 }
 
 const CardCounter = ({
   data,
-  create,
-  increment,
-  decrement,
   isSelected,
   currentItem,
 }: CardCounterProps) => {
+  const dispatch = useDispatch()
+  const create = useCreate(data)
   return (
     <AnimatePresence>
       {isSelected ? (
@@ -38,11 +37,11 @@ const CardCounter = ({
             height="23px"
             path="minus.svg"
             className="cursor-pointer"
-            onClick={() => decrement(data.good_id)}
+            onClick={() => dispatch(decrementQuantity(data.good_id))}
           />
           <p className="flex">
             {data.type === 1 && <span className="opacity-40 mr-[5px]">V:</span>}
-            <motion.p
+            <motion.span
               initial={
                 currentItem.quantity === 10
                   ? { y: 0, opacity: 1 }
@@ -57,11 +56,11 @@ const CardCounter = ({
               key={currentItem.quantity}
             >
               {currentItem.quantity}
-            </motion.p>
+            </motion.span>
             {data.type === 1 && <span className="ml-[3px]">l</span>}
           </p>
           <Icon
-            onClick={() => increment(data.good_id)}
+             onClick={() => dispatch(incrementQuantity(data.good_id))}
             width="23px"
             height="23px"
             path="plus.svg"
@@ -80,7 +79,7 @@ const CardCounter = ({
             ${data.price}
           </motion.p>
           <div
-            onClick={() => create(data)}
+            onClick={() => create()}
             className={cn(
               ' flex justify-center rounded-[25px] cursor-pointer',
               'bg-[#FBF8F1]/30 py-[15px] w-[50%]',

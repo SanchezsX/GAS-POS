@@ -1,73 +1,94 @@
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { AnimatePresence, motion } from 'framer-motion'
 import { Cashier as CashierType } from '@/modals/Types'
-import { CartContext } from '@/providers/CartProvider'
 import { supabase } from '@/supabase'
 import { toast } from 'sonner'
 import Modal from '@/components/Modal'
-
 import Popover from '@/components/Popover/Popover'
 import PopoverItem from '@/components/Popover/PopoverItem'
 import Icon from '@/components/Icon'
-
 import useSession from '@/hooks/useSession'
 import PopoverCashier from '@/layout/subcomponets/PopoverCashier'
-
 import useFetching from '@/hooks/useFetching'
 import ActionModal from '../ActionModal'
 import CahierAcount from './CahierAcount'
 import CashierModal from './CashierModal'
 import CahierSceleton from './CahierSceleton'
 import { cn } from '@/helpers/cn'
-
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '@/store/store'
+import {
+  setEmailCahier,
+  setModalIsOpen,
+  setOrdersCount,
+  setPopoverIsOpen,
+  setTotalOrdersCount,
+  setUserId,
+} from '@/store/cartSlice'
 type CashiersStorage = {
   self: CashierType
   other: CashierType[]
 }
-
 const Cashier = () => {
   const session = useSession()
-  const [popoverIsOpen, setPopoverIsOpen] = useState(false)
-  const [modalIsOpen, setModalIsOpen] = useState(false)
+
   const [cashiers, setCashiers] = useState<CashiersStorage>(
     {} as CashiersStorage
   )
-  const [userId, setUserId] = useState('')
-  const [ordersCount, setOrdersCount] = useState(0)
-  const [totalOrdersCount, setTotalOrdersCount] = useState(0)
+  // const [popoverIsOpen, setPopoverIsOpen] = useState(false)
+  // const [modalIsOpen, setModalIsOpen] = useState(false)
+  // const [userId, setUserId] = useState('')
+  // const [ordersCount, setOrdersCount] = useState(0)
+  // const [totalOrdersCount, setTotalOrdersCount] = useState(0)
 
-  const [email, setEmail] = useState('')
-
+  // const [email, setEmail] = useState('')
+  const dispatch = useDispatch()
   const popoverTriggerRef = useRef<HTMLButtonElement>(null)
 
   const [cashierFetch, cashierIsLoading] = useFetching()
   const [onDutyFetch, onDutyIsLoading] = useFetching()
   const [loginFetching, _] = useFetching()
 
-  const { cart } = useContext(CartContext)
+  const {
+    cart,
+    modalIsOpen,
+    userId,
+    emailCahier,
+    totalOrdersCount,
+    popoverIsOpen,
+    ordersCount,
+    cartPay,
+    orderId
+  } = useSelector((state: RootState) => state.cart)
 
   async function getTodayOrders() {
+    if (!cashiers.self) {
+      toast.error('Cashier not found')
+      return
+    }
     const { data, error } = await supabase
       .from('orders')
       .select()
       .eq('cashier_id', cashiers.self.cashier_id)
+      .in('status', ['success', 'rejected'])
 
     if (error) return toast.error(error.message)
 
     let count = 0
-
     data.forEach((order) => {
       const date = order?.created_at.split('T')[0]
-
       if (date === new Date().toISOString().split('T')[0]) count++
     })
 
-    setOrdersCount(count)
+    dispatch(setOrdersCount(count))
   }
 
   async function getTotalOrders() {
-    const { data, error } = await supabase.from('orders').select()
+    const { data, error } = await supabase
+      .from('orders')
+      .select()
+      .in('status', ['success', 'rejected'])
 
     if (error) return toast.error(error.message)
 
@@ -79,7 +100,7 @@ const Cashier = () => {
       if (date === new Date().toISOString().split('T')[0]) count++
     })
 
-    setTotalOrdersCount(count)
+    dispatch(setTotalOrdersCount(count))
   }
 
   const getCashier = async () => {
@@ -88,10 +109,12 @@ const Cashier = () => {
         .from('cashiers')
         .select()
         .eq('user_id', session?.user.id)
+      if (error) {
+        toast.error(error.message)
+        return
+      }
 
-      error?.code && toast.error(error.message)
-
-      setCashiers((prev) => ({ ...prev, self: data![0] }))
+      setCashiers((prev: any) => ({ ...prev, self: data![0] }))
       getOnDutyCashiers()
     })
   }
@@ -104,9 +127,12 @@ const Cashier = () => {
         .eq('on_duty', true)
         .neq('user_id', session?.user.id)
 
-      error?.code && toast.error(error.message)
+      if (error) {
+        toast.error(error.message)
+        return
+      }
 
-      setCashiers((prev) => ({ ...prev, other: data! }))
+      setCashiers((prev: any) => ({ ...prev, other: data! }))
     })
   }
 
@@ -117,7 +143,7 @@ const Cashier = () => {
         .select('email')
         .eq('user_id', userId)
 
-      setEmail(email?.[0].email)
+      dispatch(setEmailCahier(email?.[0].email))
     })
   }
 
@@ -128,35 +154,33 @@ const Cashier = () => {
   }
 
   const modalHandle = async (userId: string) => {
-    setUserId(userId)
+    dispatch(setUserId(userId))
     await getEmailedCashier(userId)
-    setModalIsOpen((prev) => !prev)
+    dispatch(setModalIsOpen(!modalIsOpen))
   }
   useEffect(() => {
-    if (!modalIsOpen) setEmail('')
+    if (!modalIsOpen) dispatch(setEmailCahier(''))
   }, [modalIsOpen])
 
   useEffect(() => {
-    getTodayOrders()
-    getTotalOrders()
-  }, [cart, cashiers.self])
+    if (cashiers.self) {
+      getTodayOrders()
+      getTotalOrders()
+    }
+  }, [cartPay, cashiers.self, orderId])
 
   useEffect(() => {
     session && getCashier()
   }, [session, modalIsOpen])
+
   return (
     <>
-      <Modal
-        isOpen={modalIsOpen}
-        setIsOpen={setModalIsOpen}
-      >
+      <Modal isOpen={modalIsOpen}>
         <ActionModal
-          setIsOpen={setModalIsOpen}
           userId={userId}
-          email={email}
+          email={emailCahier}
         />
       </Modal>
-
       <div className="w-[275px] h-[244px] bg-sideBg rounded-[39px] py-[37px] px-[20px] mt-[12px]">
         <div className="flex justify-between items-center px-[15px]">
           <p className="font-semibold">Cashier</p>
@@ -172,27 +196,28 @@ const Cashier = () => {
           {onDutyIsLoading ? (
             <CahierSceleton />
           ) : (
-            cashiers.other?.slice(0, 3).map((data, index) => (
-              <AnimatePresence>
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 10 }}
-                  key={index}
-                  onClick={() => modalHandle(data.user_id)}
-                  className="w-[52px] h-[52px] overflow-hidden rounded-full"
-                >
-                  <img
-                    className="w-full h-full object-cover"
-                    src={
-                      data?.avatar?.includes('https://')
-                        ? data?.avatar
-                        : '/images/Cashier1.png'
-                    }
-                    alt=""
-                  />
-                </motion.button>
-              </AnimatePresence>
-            ))
+            cashiers.other
+              ?.slice(0, 3)
+              .map((data: CashierType, index: number) => (
+                <AnimatePresence key={index}>
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+                    key={index}
+                    onClick={() => modalHandle(data.user_id)}
+                    className="w-[52px] h-[52px] overflow-hidden rounded-full"
+                  >
+                    <img
+                      className="w-full h-full object-cover"
+                      src={
+                        data.avatar.includes('https://')
+                          ? data?.avatar
+                          : '/images/Cashier1.png'
+                      }
+                    />
+                  </motion.button>
+                </AnimatePresence>
+              ))
           )}
           {!onDutyIsLoading && cashiers.other?.length < 3 && (
             <button
@@ -219,7 +244,6 @@ const Cashier = () => {
       </div>
       <Popover
         isOpen={popoverIsOpen}
-        setIsOpen={setPopoverIsOpen}
         triggerRef={popoverTriggerRef}
       >
         <PopoverItem
@@ -227,7 +251,7 @@ const Cashier = () => {
           title="Add account"
           onClick={handleLogout}
         />
-        {cashiers.other?.slice(3).map((data) => (
+        {cashiers.other?.slice(3).map((data: any) => (
           <PopoverCashier
             key={data.cashier_id}
             title={data.email}

@@ -4,14 +4,16 @@ import { cn } from '@/helpers/cn'
 import { PopoverProps } from '@/modals/Types'
 import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'framer-motion'
+import { setPopoverIsOpen } from '@/store/cartSlice'
+import { useDispatch } from 'react-redux'
 
 const Popover: FC<PopoverProps> = ({
   children,
   isOpen,
-  setIsOpen,
   triggerRef,
 }) => {
   const popoverContentRef = useRef<HTMLDivElement>(null)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -25,7 +27,7 @@ const Popover: FC<PopoverProps> = ({
         !trigger.contains(event.target as Node) &&
         !popoverContent.contains(event.target as Node)
       ) {
-        setIsOpen(false)
+        dispatch(setPopoverIsOpen(false))
       }
     }
 

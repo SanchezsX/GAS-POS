@@ -3,12 +3,16 @@ import { iconToColorMap } from '@/data/Data'
 import { ProductCardSetBgProps } from '@/modals/Types'
 import Icon from '../Icon'
 import { cn } from '@/helpers/cn'
+import useCreate from '@/hooks/useCreate'
 
 const ProductCardSetBg = ({
   data,
   isSelected,
-  create,
+
 }: ProductCardSetBgProps) => {
+
+  const create = useCreate(data)
+
   return (
     <div
       className={cn(
@@ -17,7 +21,7 @@ const ProductCardSetBg = ({
         'cursor-pointer',
         'max-2xl:p-[8px]'
       )}
-      onClick={() => create(data)}
+      onClick={() => create()}
     >
       <div
         className={cn(

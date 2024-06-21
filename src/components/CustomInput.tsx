@@ -1,9 +1,10 @@
-import { useState } from 'react'
 import { CustomInputProps } from '@/modals/Types'
 
 import Icon from '@/components/Icon'
 import { cn } from '@/helpers/cn'
-
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '@/store/store'
+import { setIsHidden } from '@/store/cartSlice'
 
 const CustomInput = ({
   className = '',
@@ -17,8 +18,8 @@ const CustomInput = ({
   onChange,
   onFocus,
 }: CustomInputProps) => {
-  const [isHidden, setIsHidden] = useState(false)
-
+  const isHidden = useSelector((state: RootState) => state.cart.isHidden)
+  const dispatch = useDispatch()
   return (
     <div className="relative flex items-center">
       {icon && (
@@ -54,7 +55,7 @@ const CustomInput = ({
         <button
           type="button"
           className="absolute right-6"
-          onClick={() => setIsHidden((prev) => !prev)}
+          onClick={() => dispatch(setIsHidden(!isHidden))}
         >
           <Icon
             path={!isHidden ? 'eye-slash.svg' : 'eye.svg'}

@@ -85,7 +85,6 @@ export interface IconProps {
 }
 
 export interface ModalProps {
-  setIsOpen: (isOpen: boolean) => void
   isOpen: boolean
   children: ReactNode
 }
@@ -93,7 +92,6 @@ export interface ModalProps {
 export interface PopoverProps {
   children: React.ReactNode
   isOpen: boolean
-  setIsOpen: Dispatch<SetStateAction<boolean>>
   triggerRef: React.RefObject<HTMLButtonElement>
 }
 
@@ -106,14 +104,14 @@ export interface CartInputProps {
 }
 
 export interface CartButtonProps {
-  handleClick: () => void
-  payWithDiscount: () => void
+  handlRefresh: () => void
+  pay: () => Promise<void>
   isClicked: boolean
 }
 export interface ActionModalPropsCart {
   userId: string
   email: string
-  setIsOpen: Dispatch<SetStateAction<boolean>>
+  
 }
 
 export interface Data {
@@ -127,7 +125,6 @@ export interface Data {
 }
 export interface ProductCardSetBgProps {
   data: Goods
-  create: (data: Goods) => void
   isSelected: boolean
 }
 
@@ -139,3 +136,20 @@ export interface CahierAcountProps {
   cart: CartItem[]
 }
 
+export interface CartState {
+  cart: CartItem[]
+  isHidden: boolean
+  discountTaken: number
+  orderId: number | null
+  discount: number
+  cartPay: boolean
+  email: string
+  password: string
+  isError: string
+  popoverIsOpen: boolean
+  modalIsOpen: boolean
+  userId: string
+  ordersCount: number
+  totalOrdersCount: number
+  emailCahier: string
+}
