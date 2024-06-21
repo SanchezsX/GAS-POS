@@ -1,4 +1,4 @@
-import { SyntheticEvent, useContext, useEffect, useState } from 'react'
+import { SyntheticEvent,  useEffect, useState } from 'react'
 // import { CartContext } from '@/providers/CartProvider'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/store/store'

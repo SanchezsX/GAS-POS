@@ -32,7 +32,12 @@ const Login = () => {
       dispatch(setError(error.message))
     } else {
       getCashiers(data.user.id)
-      toast.success('If producs were not added, please reload the page')
+      toast.success('Success Login ',{
+        style: {
+          background: '#1C1E24',
+          color: '#60BC94',
+        },
+      })
       dispatch(setPopoverIsOpen(false))
       dispatch(setModalIsOpen(false))
       if (data.user.id) return navigate('/GAS-POS/fuel')
