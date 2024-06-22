@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-
 import { AnimatePresence, motion } from 'framer-motion'
 import { Cashier as CashierType } from '@/modals/Types'
 import { supabase } from '@/supabase'
@@ -36,13 +35,7 @@ const Cashier = () => {
   const [cashiers, setCashiers] = useState<CashiersStorage>(
     {} as CashiersStorage
   )
-  // const [popoverIsOpen, setPopoverIsOpen] = useState(false)
-  // const [modalIsOpen, setModalIsOpen] = useState(false)
-  // const [userId, setUserId] = useState('')
-  // const [ordersCount, setOrdersCount] = useState(0)
-  // const [totalOrdersCount, setTotalOrdersCount] = useState(0)
 
-  // const [email, setEmail] = useState('')
   const dispatch = useDispatch()
   const popoverTriggerRef = useRef<HTMLButtonElement>(null)
 
@@ -59,7 +52,7 @@ const Cashier = () => {
     popoverIsOpen,
     ordersCount,
     cartPay,
-    orderId
+    orderId,
   } = useSelector((state: RootState) => state.cart)
 
   async function getTodayOrders() {

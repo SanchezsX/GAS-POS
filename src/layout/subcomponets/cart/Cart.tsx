@@ -1,30 +1,25 @@
 import { SyntheticEvent,  useEffect, useState } from 'react'
-// import { CartContext } from '@/providers/CartProvider'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '@/store/store'
 import { clearCart, setDiscount, setDiscountTaken } from '@/store/cartSlice'
+import { RootState } from '@/store/store'
 import { supabase } from '@/supabase'
-import { toast } from 'sonner'
-import CustomButton from '@/components/CustomButton'
 import { AnimatePresence, motion } from 'framer-motion'
+import { itemVariants, transition } from '@/variants/framerVariants'
+import { toast } from 'sonner'
+import { cn } from '@/helpers/cn'
 
+import CustomButton from '@/components/CustomButton'
 import Skeleton from '@/components/Skeleton'
 import CartItem from './CartItem'
 import Select from '../Select'
-
 import CartInput from './CartInput'
 import CartButtonDiscount from './CartButtonDiscount'
 import CartTotalPaySummary from './CartTotalPaySummary'
 import CartButton from './CartButton'
 import CartAddProduct from './CartAddProduct'
-import { cn } from '@/helpers/cn'
-import { itemVariants, transition } from '@/variants/framerVariants'
 import usePay from '@/hooks/usePay'
 
-// type OrderStatus = 'pending' | 'success' | 'canceled';
-
 const Cart = () => {
-  // const { cart, orderId, pay, clearCart } = useContext(CartContext)
   const dispatch = useDispatch()
   const { cart, orderId, discount, discountTaken } = useSelector(
     (state: RootState) => state.cart
@@ -166,19 +161,6 @@ const Cart = () => {
                 >
                   $ {totalPrice}
                 </motion.p>
-                {/* <div className="flex gap-2">
-                  <span className=" font-semibold text-[20px]">$</span>
-                  <motion.p
-                    initial={{ y: -20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -20, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    key={totalPrice}
-                    className="font-semibold text-[20px]"
-                  >
-                    {totalPrice}
-                  </motion.p>
-                </div> */}
               </div>
               <div className="flex justify-between items-center mb-[20px]">
                 <p className="text-white/50">Discount</p>

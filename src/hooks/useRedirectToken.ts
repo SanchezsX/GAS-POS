@@ -1,9 +1,6 @@
 import { supabase } from "@/supabase"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-
-
-
 const useRedirectSession = async () => {
   const navigate = useNavigate()
 

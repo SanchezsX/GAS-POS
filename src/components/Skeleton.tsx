@@ -1,10 +1,7 @@
 import { cn } from "@/helpers/cn"
+import { SearchProps } from "@/modals/Types"
 
-interface SearchProps {
-  width: string
-  height: string
-  className?: string
-}
+
 const Skeleton = ({ width, height, className = '' }: SearchProps) => {
   return (
     <div

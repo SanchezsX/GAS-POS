@@ -1,14 +1,11 @@
 
 import { cn } from '@/helpers/cn'
+import { CashierModalProps } from '@/modals/Types'
 import { setPopoverIsOpen } from '@/store/cartSlice'
 import { useDispatch } from 'react-redux'
-interface CashierModalProps {
-  setPopoverIsOpen: (isOpen: boolean) => void
-  popoverTriggerRef: React.RefObject<HTMLButtonElement>
-}
+
 
 const CashierModal = ({
-  // setPopoverIsOpen,
   popoverTriggerRef,
 }: CashierModalProps) => {
 

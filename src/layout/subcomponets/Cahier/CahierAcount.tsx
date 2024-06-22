@@ -10,7 +10,7 @@ const CahierAcount = ({
   ordersCount,
   cart,
 }: CahierAcountProps) => {
-// console.log(cashiers);
+
 
   return (
     <div

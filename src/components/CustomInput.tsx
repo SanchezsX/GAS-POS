@@ -1,10 +1,10 @@
 import { CustomInputProps } from '@/modals/Types'
-
-import Icon from '@/components/Icon'
-import { cn } from '@/helpers/cn'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '@/store/store'
 import { setIsHidden } from '@/store/cartSlice'
+import { RootState } from '@/store/store'
+import { cn } from '@/helpers/cn'
+import Icon from '@/components/Icon'
+
 
 const CustomInput = ({
   className = '',

@@ -153,3 +153,14 @@ export interface CartState {
   totalOrdersCount: number
   emailCahier: string
 }
+
+export interface SearchProps {
+  width: string
+  height: string
+  className?: string
+}
+
+export interface CashierModalProps {
+  setPopoverIsOpen: (isOpen: boolean) => void
+  popoverTriggerRef: React.RefObject<HTMLButtonElement>
+}
