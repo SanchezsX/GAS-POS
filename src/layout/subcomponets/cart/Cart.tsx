@@ -1,4 +1,4 @@
-import { SyntheticEvent,  useEffect, useState } from 'react'
+import { SyntheticEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { clearCart, setDiscount, setDiscountTaken } from '@/store/cartSlice'
 import { RootState } from '@/store/store'
@@ -61,14 +61,14 @@ const Cart = () => {
     dispatch(setDiscount(data[0].discount))
     setIsDiscountActive(false)
     setDiscountValue('324656')
-    setDiscountTaken(0)
+    dispatch(setDiscountTaken(0))
   }
 
   const pay = usePay(() => {
     dispatch(setDiscount(0)),
       setDiscountValue('324656'),
       setIsDiscountActive(false)
-    setDiscountTaken(0)
+    dispatch(setDiscountTaken(0))
   }, totalPrice)
 
   useEffect(() => {
@@ -83,7 +83,7 @@ const Cart = () => {
     setTotalPrice(+totalPriceAfterDiscount.toFixed(2))
 
     const discountTaken = cartTotal - totalPriceAfterDiscount
-    setDiscountTaken(+discountTaken.toFixed(2))
+    dispatch(setDiscountTaken(+discountTaken.toFixed(2)))
   }, [cart, discount])
 
   return (
