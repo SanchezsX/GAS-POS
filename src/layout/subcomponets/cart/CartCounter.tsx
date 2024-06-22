@@ -4,8 +4,6 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { decrementQuantity, incrementQuantity } from '@/store/cartSlice'
 import { useDispatch } from 'react-redux'
 
-
-
 interface CartCounterProps {
   data: any
 }

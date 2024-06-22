@@ -164,3 +164,39 @@ export interface CashierModalProps {
   setPopoverIsOpen: (isOpen: boolean) => void
   popoverTriggerRef: React.RefObject<HTMLButtonElement>
 }
+
+export interface PopoverCashierProps {
+  avatar: string
+  title: string
+  onClick?: () => void
+}
+
+export interface SectionProps {
+  isActive: boolean
+  children: ReactNode
+  pathIcon: string
+  to: string
+}
+
+export interface Option {
+  value: string
+  label: string
+  link: string
+}
+
+export const OPTIONS: Option[] = [
+  { value: 'Cash', label: 'Cash', link: 'dolar.svg' },
+  { value: 'Debit Card', label: 'Debit Card', link: 'ion_card.svg' },
+  { value: 'E-Wallet', label: 'E-Wallet', link: 'qr.svg' },
+]
+
+
+export interface DataMain {
+  good_id: number
+  title: string
+  price: number
+  color: string
+  type: number
+  quantity: number
+  icon: string
+}

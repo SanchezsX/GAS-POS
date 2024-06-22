@@ -1,10 +1,7 @@
+import { PopoverCashierProps } from '@/modals/Types'
 import { FC } from 'react'
 
-interface PopoverCashierProps {
-  avatar: string
-  title: string
-  onClick?: () => void
-}
+
 
 const PopoverCashier: FC<PopoverCashierProps> = ({
   avatar,

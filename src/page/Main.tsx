@@ -7,20 +7,12 @@ import { toast } from 'sonner'
 import useFetching from '@/hooks/useFetching'
 import SectionSceleton from './components/SectionSceleton'
 import ProductCard from '@/components/ProductCard/ProductCard'
+import { DataMain } from '@/modals/Types'
 
 
-interface Data {
-  good_id: number
-  title: string
-  price: number
-  color: string
-  type: number
-  quantity: number
-  icon: string
-}
 
 function Main() {
-  const [goods, setGoods] = useState<Data[]>([] as Data[])
+  const [goods, setGoods] = useState<DataMain[]>([] as DataMain[])
   const [error, setError] = useState<SupaError>(null)
 
   const location = useLocation()
@@ -42,7 +34,7 @@ function Main() {
           return
         }
 
-        setGoods(data as Data[])
+        setGoods(data as DataMain[])
       })
     }
 
@@ -60,7 +52,7 @@ function Main() {
           return
         }
 
-        setGoods(data as Data[])
+        setGoods(data as DataMain[])
         console.log(value)
       })
     }

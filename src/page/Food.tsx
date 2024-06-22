@@ -1,18 +1,12 @@
 import { useState, useEffect } from 'react'
-
-import { toast } from 'sonner'
-
 import { useLocation } from 'react-router-dom'
+import { toast } from 'sonner'
 import { supabase } from '@/supabase'
+import { Data } from '@/modals/Types'
 import SupaError from '@/modals/Error'
 import useFetching from '@/hooks/useFetching'
-
 import SectionSceleton from './components/SectionSceleton'
-import { Data } from '@/modals/Types'
 import ProductCard from '@/components/ProductCard/ProductCard'
-
-
-
 
 
 const Food = () => {

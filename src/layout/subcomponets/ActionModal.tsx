@@ -1,18 +1,17 @@
 import { type FC, type FormEvent, useEffect, useState } from 'react'
-
 import { useNavigate } from 'react-router-dom'
-import { toast } from 'sonner'
-
+import { useDispatch } from 'react-redux'
+import { setModalIsOpen } from '@/store/cartSlice'
+import { AnimatePresence, motion } from 'framer-motion'
 import { supabase } from '@/supabase'
+import { toast } from 'sonner'
 import { ActionModalPropsCart } from '@/modals/Types'
+
 import CustomInput from '@/components/CustomInput'
 import CustomButton from '@/components/CustomButton'
 import useFetching from '@/hooks/useFetching'
 import SupaError from '@/modals/Error'
 import Skeleton from '@/components/Skeleton'
-import { AnimatePresence, motion } from 'framer-motion'
-import { setModalIsOpen } from '@/store/cartSlice'
-import { useDispatch } from 'react-redux'
 interface Error {
   login: SupaError
   logout: SupaError

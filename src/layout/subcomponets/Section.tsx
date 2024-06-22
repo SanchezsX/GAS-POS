@@ -1,17 +1,9 @@
-import { ReactNode } from 'react'
-
 import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-
-import Icon from '@/components/Icon'
 import { cn } from '@/helpers/cn'
+import Icon from '@/components/Icon'
+import { SectionProps } from '@/modals/Types'
 
-interface SectionProps {
-  isActive: boolean
-  children: ReactNode
-  pathIcon: string
-  to: string
-}
 
 const Section = ({ children, isActive, pathIcon, to }: SectionProps) => {
   return (

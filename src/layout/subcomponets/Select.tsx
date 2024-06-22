@@ -3,17 +3,7 @@ import Icon from '@/components/Icon'
 import React, { useEffect, useRef, useState } from 'react'
 import { cn } from '@/helpers/cn'
 import { AnimatePresence, motion, } from 'framer-motion'
-interface Option {
-  value: string
-  label: string
-  link: string
-}
-
-const OPTIONS: Option[] = [
-  { value: 'Cash', label: 'Cash', link: 'dolar.svg' },
-  { value: 'Debit Card', label: 'Debit Card', link: 'ion_card.svg' },
-  { value: 'E-Wallet', label: 'E-Wallet', link: 'qr.svg' },
-]
+import { OPTIONS, Option } from '@/modals/Types'
 
 const Select: React.FC<{ className?: string }> = ({ className = '' }) => {
   const [isOpen, setIsOpen] = useState(false)
