@@ -39,7 +39,7 @@ const Cart = () => {
     dispatch(setDiscount(0))
     setDiscountValue('324656')
     setIsDiscountActive(false)
-    setDiscountTaken(0)
+    dispatch(setDiscountTaken(0))
   }
 
   async function submitDiscount(e: SyntheticEvent) {

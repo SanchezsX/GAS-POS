@@ -17,11 +17,7 @@ interface Error {
   logout: SupaError
 }
 
-const ActionModal: FC<ActionModalPropsCart> = ({
-  userId,
-  email,
-  
-}) => {
+const ActionModal: FC<ActionModalPropsCart> = ({ userId, email }) => {
   const [error, setError] = useState<Error>({} as Error)
   const [password, setPassword] = useState('')
   const dispatch = useDispatch()
@@ -29,7 +25,6 @@ const ActionModal: FC<ActionModalPropsCart> = ({
   const navigate = useNavigate()
 
   useEffect(() => {
-    
     if (error.login) navigate('/GAS-POS/login')
   }, [error.login])
 
@@ -57,7 +52,7 @@ const ActionModal: FC<ActionModalPropsCart> = ({
       }
 
       dispatch(setModalIsOpen(false))
-      toast.success('You are change an account!',{
+      toast.success('You are change an account!', {
         style: {
           background: '#1C1E24',
           color: '#60BC94',
@@ -83,7 +78,12 @@ const ActionModal: FC<ActionModalPropsCart> = ({
       }
 
       dispatch(setModalIsOpen(false))
-      toast.success("You're off shift!")
+      toast.success("You're off shift!", {
+        style: {
+          background: '#1C1E24',
+          color: '#60BC94',
+        },
+      })
     })
   }
 
@@ -93,7 +93,7 @@ const ActionModal: FC<ActionModalPropsCart> = ({
         key="modalAction"
         initial={{ scale: 0.8 }}
         animate={{ scale: 1 }}
-        exit={{ scale: 0,  }}
+        exit={{ scale: 0 }}
         transition={{ duration: 0.3 }}
         className="bg-[#181924]/90 w-[550px] h-[450px] flex flex-col justify-center rounded-[50px] "
       >
