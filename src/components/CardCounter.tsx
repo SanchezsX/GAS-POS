@@ -1,4 +1,4 @@
-import {  Goods } from '@/modals/Types'
+import {  CardCounterProps, Goods } from '@/modals/Types'
 import { cn } from '@/helpers/cn'
 import Icon from './Icon'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -6,11 +6,7 @@ import useCreate from '@/hooks/useCreate'
 import { useDispatch } from 'react-redux'
 import { decrementQuantity, incrementQuantity } from '@/store/cartSlice'
 
-interface CardCounterProps {
-  data: Goods
-  isSelected: boolean
-  currentItem: any
-}
+
 
 const CardCounter = ({
   data,

@@ -143,7 +143,13 @@ const Cashier = () => {
   async function handleLogout() {
     const { error } = await supabase.auth.signOut()
 
-    if (error) toast.error('Failed to change account!')
+    if (error) toast.error('Failed to change account!',{
+      style: {
+        background: '#1C1E24',
+        color: '#D97B7B',
+      },
+    })
+      
   }
 
   const modalHandle = async (userId: string) => {

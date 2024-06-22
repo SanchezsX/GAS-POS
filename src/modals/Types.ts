@@ -200,3 +200,16 @@ export interface DataMain {
   quantity: number
   icon: string
 }
+
+
+export interface PopoverItemProps {
+  icon: string
+  title: string
+  onClick?: () => void
+}
+
+export interface CardCounterProps {
+  data: Goods
+  isSelected: boolean
+  currentItem: any
+}

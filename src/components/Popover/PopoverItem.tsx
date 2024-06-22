@@ -1,13 +1,11 @@
 import { FC } from 'react'
 import Icon from '@/components/Icon'
+import { PopoverItemProps } from '@/modals/Types'
 
-interface PopoverItemProps {
-  icon: string
-  title: string
-  onClick?: () => void
-}
+
 
 const PopoverItem: FC<PopoverItemProps> = ({ icon, title, onClick }) => {
+  
   return (
     <button
       onClick={onClick}
