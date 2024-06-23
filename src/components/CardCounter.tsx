@@ -1,10 +1,10 @@
-import {  CardCounterProps, Goods } from '@/modals/Types'
+import {  CardCounterProps} from '@/modals/Types'
 import { cn } from '@/helpers/cn'
 import Icon from './Icon'
 import { AnimatePresence, motion } from 'framer-motion'
 import useCreate from '@/hooks/useCreate'
 import { useDispatch } from 'react-redux'
-import { decrementQuantity, incrementQuantity } from '@/store/cartSlice'
+import { decrementQuantity, incrementQuantity } from '@/store/slices/cartSlice'
 
 
 

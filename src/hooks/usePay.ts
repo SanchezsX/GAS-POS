@@ -1,7 +1,8 @@
 import { useCallback } from 'react';
-import { setCart, setOrderId, setCartPay, selectOrderId } from '@/store/cartSlice';
-import { supabase } from '@/supabase';
+import { setCart, setCartPay, setOrderId } from '@/store/slices/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { selectOrderId } from '@/store/selectors/cartSelectors';
+import { supabase } from '@/supabase';
 import { toast } from 'sonner';
 
 const usePay = (cb: () => void, price: number) => {

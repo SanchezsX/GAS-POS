@@ -4,7 +4,7 @@ import { cn } from '@/helpers/cn'
 import { PopoverProps } from '@/modals/Types'
 import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import { setPopoverIsOpen } from '@/store/cartSlice'
+import { setPopoverIsOpen } from '@/store/slices/cartSlice'
 import { useDispatch } from 'react-redux'
 
 const Popover: FC<PopoverProps> = ({

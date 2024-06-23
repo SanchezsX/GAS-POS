@@ -2,7 +2,7 @@ import type { FC, MouseEvent } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ModalProps } from '@/modals/Types'
 import { cn } from '@/helpers/cn'
-import { setModalIsOpen } from '@/store/cartSlice'
+import { setModalIsOpen } from '@/store/slices/cartSlice'
 import { useDispatch } from 'react-redux'
 
 const Modal: FC<ModalProps> = ({ isOpen, children }) => {

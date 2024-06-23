@@ -1,7 +1,7 @@
 import { cn } from '@/helpers/cn'
 import Icon from '@/components/Icon'
 import { AnimatePresence, motion } from 'framer-motion'
-import { decrementQuantity, incrementQuantity } from '@/store/cartSlice'
+import { decrementQuantity, incrementQuantity } from '@/store/slices/cartSlice'
 import { useDispatch } from 'react-redux'
 
 interface CartCounterProps {

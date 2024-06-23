@@ -1,6 +1,6 @@
 import { SyntheticEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearCart, setDiscount, setDiscountTaken } from '@/store/cartSlice'
+import { clearCart, setDiscount, setDiscountTaken } from '@/store/slices/cartSlice'
 import { RootState } from '@/store/store'
 import { supabase } from '@/supabase'
 import { AnimatePresence, motion } from 'framer-motion'

@@ -1,7 +1,7 @@
 import { type FC, type FormEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { setModalIsOpen } from '@/store/cartSlice'
+import { setModalIsOpen } from '@/store/slices/cartSlice'
 import { AnimatePresence, motion } from 'framer-motion'
 import { supabase } from '@/supabase'
 import { toast } from 'sonner'

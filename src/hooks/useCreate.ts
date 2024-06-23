@@ -3,8 +3,10 @@ import { supabase } from "@/supabase"
 import { useAuth } from "./useAuth"
 import { useDispatch, useSelector } from "react-redux"
 import { toast } from "sonner"
-import { removeFromCart, selectOrderId, setCart, setOrderId } from "@/store/cartSlice"
+
 import { RootState } from "@/store/store"
+import { selectOrderId } from "@/store/selectors/cartSelectors"
+import { removeFromCart, setCart, setOrderId } from "@/store/slices/cartSlice"
 
 function useCreate(goods: Goods) {
   const orderId  = useSelector(selectOrderId);

@@ -14,7 +14,7 @@ import {
   setModalIsOpen,
   setPassword,
   setPopoverIsOpen,
-} from '@/store/cartSlice'
+} from '@/store/slices/cartSlice'
 
 const Login = () => {
   const navigate = useNavigate()

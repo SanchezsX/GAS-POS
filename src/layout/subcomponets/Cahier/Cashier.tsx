@@ -24,7 +24,7 @@ import {
   setPopoverIsOpen,
   setTotalOrdersCount,
   setUserId,
-} from '@/store/cartSlice'
+} from '@/store/slices/cartSlice'
 type CashiersStorage = {
   self: CashierType
   other: CashierType[]
