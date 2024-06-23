@@ -57,7 +57,12 @@ const Cashier = () => {
 
   async function getTodayOrders() {
     if (!cashiers.self) {
-      toast.error('Cashier not found')
+      toast.error('Cashier not found', {
+        style: {
+          background: '#1C1E24',
+          color: '#D97B7B',
+        },
+      })
       return
     }
     const { data, error } = await supabase
@@ -66,7 +71,12 @@ const Cashier = () => {
       .eq('cashier_id', cashiers.self.cashier_id)
       .in('status', ['success', 'rejected'])
 
-    if (error) return toast.error(error.message)
+    if (error) return toast.error(error.message, {
+      style: {
+        background: '#1C1E24',
+        color: '#D97B7B',
+      },
+    })
 
     let count = 0
     data.forEach((order) => {
@@ -83,7 +93,12 @@ const Cashier = () => {
       .select()
       .in('status', ['success', 'rejected'])
 
-    if (error) return toast.error(error.message)
+    if (error) return toast.error(error.message, {
+      style: {
+        background: '#1C1E24',
+        color: '#D97B7B',
+      },
+    })
 
     let count = 0
 
@@ -103,7 +118,12 @@ const Cashier = () => {
         .select()
         .eq('user_id', session?.user.id)
       if (error) {
-        toast.error(error.message)
+        toast.error(error.message, {
+          style: {
+            background: '#1C1E24',
+            color: '#D97B7B',
+          },
+        })
         return
       }
 
@@ -121,7 +141,12 @@ const Cashier = () => {
         .neq('user_id', session?.user.id)
 
       if (error) {
-        toast.error(error.message)
+        toast.error(error.message, {
+          style: {
+            background: '#1C1E24',
+            color: '#D97B7B',
+          },
+        })
         return
       }
 

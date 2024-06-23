@@ -1,10 +1,9 @@
 import CustomButton from '@/components/CustomButton'
-import Icon from '@/components/Icon'
-import { cn } from '@/helpers/cn'
 import { AnimatePresence, motion } from 'framer-motion'
-
 import { CartButtonProps } from '@/modals/Types'
 import { itemVariants, transition } from '@/variants/framerVariants'
+import { cn } from '@/helpers/cn'
+import Icon from '@/components/Icon'
 
 const CartButton = ({
   handlRefresh,

@@ -46,7 +46,12 @@ const ActionModal: FC<ActionModalPropsCart> = ({ userId, email }) => {
 
       if (error) {
         setError((prev) => ({ ...prev, login: error }))
-        toast.error(error.message)
+        toast.error(error.message, {
+          style: {
+            background: '#1C1E24',
+            color: '#D97B7B',
+          },
+        })
 
         return
       }
@@ -72,7 +77,12 @@ const ActionModal: FC<ActionModalPropsCart> = ({ userId, email }) => {
 
       if (error) {
         setError((prev) => ({ ...prev, logout: error }))
-        toast.error(error.message)
+        toast.error(error.message, {
+          style: {
+            background: '#1C1E24',
+            color: '#D97B7B',
+          },
+        })
 
         return
       }

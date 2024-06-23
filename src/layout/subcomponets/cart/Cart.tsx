@@ -1,6 +1,10 @@
 import { SyntheticEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearCart, setDiscount, setDiscountTaken } from '@/store/slices/cartSlice'
+import {
+  clearCart,
+  setDiscount,
+  setDiscountTaken,
+} from '@/store/slices/cartSlice'
 import { RootState } from '@/store/store'
 import { supabase } from '@/supabase'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -51,11 +55,21 @@ const Cart = () => {
       .eq('id', +discountValue)
 
     if (error) {
-      return toast.error(error.message)
+      return toast.error("Not valid code card!", {
+        style: {
+          background: '#1C1E24',
+          color: '#D97B7B',
+        },
+      })
     }
 
     if (!data[0]) {
-      return toast.error('Not valid code card!')
+      return toast.error('Not valid code card!', {
+        style: {
+          background: '#1C1E24',
+          color: '#D97B7B',
+        },
+      })
     }
 
     dispatch(setDiscount(data[0].discount))
